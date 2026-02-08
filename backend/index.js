@@ -10,8 +10,17 @@ app.use(cors())
 app.use(express.json())
 
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok' })
+  res.json({ status: 'Connect from Backend' })
 })
+
+
+app.get('/api/stats', (req, res) => {
+  res.json({
+    labels: ['Success', 'Ongoing'],
+    values: [12, 19],
+  });
+});
+
 
 const PORT = process.env.PORT || 3000
 app.listen(PORT, () => {
