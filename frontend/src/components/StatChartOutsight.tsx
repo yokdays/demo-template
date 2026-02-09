@@ -8,17 +8,17 @@ interface PieData {
   value: number;
 }
 
-const COLORS = ["#005689", "#e0e0e0"];
+const COLORS = ["#e64a19", "#e0e0e0"];
 const renderLabel = ({ name, percent }: any) => {
   return `${name} ${(percent * 100).toFixed(0)}%`;
 };
 
-export default function PieStats() {
+export default function ChartOutsight() {
   const [data, setData] = useState<PieData[]>([]);
   const total = data.reduce((sum, d) => sum + d.value, 0);
 
   useEffect(() => {
-    axios.get("/api/stats").then((res) => {
+    axios.get("/api/outsight").then((res) => {
       const { labels, values } = res.data;
       setData(
         labels.map((label: string, i: number) => ({
@@ -32,7 +32,7 @@ export default function PieStats() {
   return (
     <div className="w-[20vw] bg-white rounded-xl shadow p-4 grid justify-center">
       <div>
-        <h2 className="text-lg font-bold mb-1 text-slate-800">กลุ่มลูกค้าทั้งในและต่างประเทศ</h2>
+        <h2 className="text-lg font-bold mb-1 text-slate-800">กลุ่มลูกค้าต่างประเทศ</h2>
       </div>
       <div className="w-[16vw] h-[8vw]">
         <ResponsiveContainer>
