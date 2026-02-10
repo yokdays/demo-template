@@ -34,7 +34,7 @@ export default function PieStats() {
       <div>
         <h2 className="text-lg font-bold mb-1 text-slate-800">กลุ่มลูกค้าทั้งในและต่างประเทศ</h2>
       </div>
-      <div className="w-[16vw] h-[8vw]">
+      <div className="w-[18vw] h-[8vw]">
         <ResponsiveContainer>
           <PieChart>
             <Pie
@@ -84,7 +84,7 @@ export default function PieStats() {
         {data.map((d, i) => {
           const percent = ((d.value / total) * 100).toFixed(0);
           return (
-            <div key={i} className="flex items-center justify-between text-sm">
+            <div key={i} className="grid grid-cols-[3fr_1fr] items-center justify-between text-sm">
               <div className="flex items-center gap-2">
                 <span
                   className="w-3 h-3 rounded-full"
@@ -93,9 +93,9 @@ export default function PieStats() {
                 <span className="text-slate-700">{d.name}</span>
               </div>
 
-              <span className="font-medium text-slate-800">
+              <div className="font-medium text-slate-800 flex justify-end">
                 {d.value} ({percent}%)
-              </span>
+              </div>
             </div>
           );
         })}

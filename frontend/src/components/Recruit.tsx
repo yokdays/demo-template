@@ -5,7 +5,7 @@ export default function Recruit() {
   const [data, setData] = useState<{ name: string; value: number }[]>([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/api/recruit").then((res) => {
+    axios.get("/api/recruit").then((res) => {
       const { labels, values } = res.data;
       setData(
         labels.map((label: string, i: number) => ({

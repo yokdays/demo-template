@@ -8,7 +8,7 @@ interface PieData {
   value: number;
 }
 
-const COLORS = ["#e64a19", "#e0e0e0"];
+const COLORS = ["#005689", "#e0e0e0"];
 const renderLabel = ({ name, percent }: any) => {
   return `${name} ${(percent * 100).toFixed(0)}%`;
 };
@@ -34,7 +34,7 @@ export default function ChartOutsight() {
       <div>
         <h2 className="text-lg font-bold mb-1 text-slate-800">กลุ่มลูกค้าต่างประเทศ</h2>
       </div>
-      <div className="w-[16vw] h-[8vw]">
+      <div className="w-[18vw] h-[8vw]">
         <ResponsiveContainer>
           <PieChart>
             <Pie
@@ -81,10 +81,10 @@ export default function ChartOutsight() {
 
       {/* LEGEND */}
       <div className="mt-4 space-y-2">
-        {data.map((d, i) => {
+      {data.map((d, i) => {
           const percent = ((d.value / total) * 100).toFixed(0);
           return (
-            <div key={i} className="flex items-center justify-between text-sm">
+            <div key={i} className="grid grid-cols-[3fr_1fr] items-center justify-between text-sm">
               <div className="flex items-center gap-2">
                 <span
                   className="w-3 h-3 rounded-full"
@@ -93,9 +93,9 @@ export default function ChartOutsight() {
                 <span className="text-slate-700">{d.name}</span>
               </div>
 
-              <span className="font-medium text-slate-800">
+              <div className="font-medium text-slate-800 flex justify-end">
                 {d.value} ({percent}%)
-              </span>
+              </div>
             </div>
           );
         })}
