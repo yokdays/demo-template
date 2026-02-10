@@ -11,8 +11,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-/* ---------------- MOCK USER ---------------- */
-// ปกติควรดึงจาก DB
 const users = [
   {
     id: 1,
@@ -95,8 +93,7 @@ app.get("/api/profile", authMiddleware, (req, res) => {
   });
 });
 
-/* ---------------- YOUR EXISTING APIs ---------------- */
-app.get("/api/health", authMiddleware, (req, res) => {
+app.get("/api/health",  (req, res) => {
   res.json({ status: "Connect from Backend" });
 });
 
@@ -107,7 +104,27 @@ app.get("/api/stats", authMiddleware, (req, res) => {
   });
 });
 
-/* ---------------- SERVER ---------------- */
+app.get("/api/insight", (req, res) => {
+  res.json({
+    labels: ["ตอบแบบสอบถามครบถ้วน", "กำลังอยู่ในขั้นตอนตอบแบบสอบถาม"],
+    values: [41, 122],
+  });
+});
+
+app.get("/api/outsight", (req, res) => {
+  res.json({
+    labels: ["ตอบแบบสอบถามครบถ้วน", "กำลังอยู่ในขั้นตอนตอบแบบสอบถาม"],
+    values: [19, 9],
+  });
+});
+
+app.get("/api/recruit", (req, res) => {
+  res.json({
+    labels: ["นัดหมายสำเร็จ", "อยู่ในขั้นตอนการนัดหมาย", "ปฎิเสธที่จะเข้าร่วม"],
+    values: [60, 19, 12],
+  });
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, "0.0.0.0", () => {
   console.log(`🚀 Backend running`);
