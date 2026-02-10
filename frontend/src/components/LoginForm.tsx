@@ -1,11 +1,21 @@
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import ptt from "/src/images/ptt.png";
+import casia from "/src/images/c-asia.png";
+import ModernInput from "./input";
 
-export default function Login() {
+interface LoginProps {
+  setToken: (token: string) => void;
+}
+
+export default function Login({ setToken }: LoginProps) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,11 +28,17 @@ export default function Login() {
         password,
       });
 
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
+      const { token, user } = res.data;
 
-      // redirect หลัง login
-      window.location.href = "/dashboard";
+      // เก็บ token + user
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
+
+      // update auth state
+      setToken(token);
+
+      // redirect แบบ React (ไม่ reload)
+      navigate("/dashboard", { replace: true });
     } catch (err: any) {
       setError(err.response?.data?.message || "Login failed");
     } finally {
@@ -31,41 +47,54 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <form
-        onSubmit={handleLogin}
-        className="bg-white p-6 rounded-xl shadow-md w-80 space-y-4"
-      >
-        <h1 className="text-xl font-bold text-center">Login</h1>
-
-        {error && (
-          <p className="text-red-500 text-sm text-center">{error}</p>
-        )}
-
-        <input
-          type="text"
-          placeholder="Username"
-          className="w-full border rounded px-3 py-2"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-
-        <input
-          type="password"
-          placeholder="Password"
-          className="w-full border rounded px-3 py-2"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-8">
+      <div>
+        <form
+          onSubmit={handleLogin}
+          className="bg-white p-6 rounded-xl shadow-md max-w-* space-y-4"
         >
-          {loading ? "Logging in..." : "Login"}
-        </button>
-      </form>
+          <div className="flex items-center justify-center gap-4">
+            <img
+              src={ptt}
+              alt="PTT"
+              className="h-12 sm:h-14 md:h-16 object-contain"
+            />
+            <img
+              src={casia}
+              alt="Custom Asia"
+              className="h-14 sm:h-16 md:h-18 object-contain mt-6"
+            />
+          </div>
+          <h1 className="text-xl font-bold text-center p-4 max-w-[420px]">
+            โครงการติดตามความคืบหน้าของแบบสำรวจความพึงพอใจและความไม่พึงพอใจของลูกค้า
+          </h1>
+
+          <h1 className="text-md font-bold text-center">เข้าสู่ระบบ</h1>
+          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+          <ModernInput
+            label="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+
+          <ModernInput
+            type="password"
+            label="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 disabled:opacity-60"
+          >
+            {loading ? "Logging in..." : "Login"}
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

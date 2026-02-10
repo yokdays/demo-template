@@ -11,21 +11,26 @@ import Progress2 from "./components/Progress2";
 export default function App() {
   const [status, setStatus] = useState("loading...");
   const [checkedAuth, setCheckedAuth] = useState(false);
-
+  const [user, setUser] = useState(null);
   useEffect(() => {
     const token = localStorage.getItem("token");
-
+  
     if (!token) {
       window.location.replace("/login");
       return;
     }
-
+  
     axios.defaults.headers.common.Authorization = `Bearer ${token}`;
-
+  
     axios
-      .get("http://localhost:3000/api/health")
-      .then((res) => setStatus(res.data.status))
-      .catch(() => setStatus("error"))
+      .get("/api/profile")
+      .then((res) => {
+        setUser(res.data.user);
+      })
+      .catch(() => {
+        localStorage.removeItem("token");
+        window.location.replace("/login");
+      })
       .finally(() => setCheckedAuth(true));
   }, []);
 
@@ -39,7 +44,7 @@ export default function App() {
 
   return (
     <>
-      <Navbar />
+      <Navbar user={user} />
       <div className="min-h-screen flex justify-center py-4 bg-gray-200">
         <div className="grid grid-cols-[1fr_3fr] gap-4">
           <div className="grid gap-4">
