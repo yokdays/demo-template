@@ -7,7 +7,22 @@ export default function Navbar({ user }) {
   const logout = useLogout();
 
   return (
-    <nav className="w-full h-14 px-6 bg-white border-b shadow-sm flex items-center justify-between">
+    <nav
+      className="
+        w-full h-14 px-6
+        flex items-center justify-between
+
+        bg-gradient-to-r
+      from-white
+      via-[#00478E]/90
+      to-[#005689]
+
+        text-white
+        backdrop-blur-md
+        border-b border-white/20
+        shadow-md
+      "
+    >
       <div className="flex items-center gap-3">
         <a href="/dashboard">
           <div className="flex items-center justify-center w-16 h-16 ml-10 text-white rounded gap-2 hover:cursor-pointer">
@@ -32,13 +47,13 @@ export default function Navbar({ user }) {
       <div className="flex items-center gap-6">
         <div className="flex items-center gap-2 pl-4 border-l">
           <div className="flex items-center justify-center w-8 h-8 text-sm font-semibold text-white bg-gray-400 rounded-full">
-            NJ
+            {user?.name?.charAt(0)?.toUpperCase() || "?"}
           </div>
           {user && (
             <div className="flex items-center gap-3">
               <span className="font-medium ml-1">{user.name}</span>
               <button
-                className="text-sm text-red-600 hover:underline"
+                className="text-sm text-white hover:underline"
                 onClick={() => {
                   localStorage.removeItem("token");
                   window.location.replace("/login");

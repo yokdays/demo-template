@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Dashboard from "./Dashboard";
 import Login from "./components/LoginForm";
+import bg from "./images/bg.png";
 
 export default function App() {
   const [token, setToken] = useState(null);
@@ -9,28 +10,59 @@ export default function App() {
 
   useEffect(() => {
     const storedToken = localStorage.getItem("token");
-    
     setToken(storedToken);
     setLoading(false);
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        Loading...
+      </div>
+    );
   }
 
   return (
-    <Routes>
-      <Route
-        path="/login"
-        element={token ? <Navigate to="/dashboard" /> : <Login setToken={setToken} />}
+    <div className="relative min-h-screen">
+      <div
+        className="
+          fixed inset-0
+          bg-cover bg-center
+          filter
+          brightness-110
+          contrast-110
+          saturate-110
+        "
+        style={{
+          backgroundImage: `url(${bg})`,
+        }}
       />
 
-      <Route
-        path="/dashboard"
-        element={token ? <Dashboard /> : <Navigate to="/login" />}
-      />
+      {/* OVERLAY */}
+      <div className="fixed inset-0 bg-black/40" />
 
-      <Route path="*" element={<Navigate to="/dashboard" />} />
-    </Routes>
+      {/* CONTENT */}
+      <div className="relative z-10 min-h-screen">
+        <Routes>
+          <Route
+            path="/login"
+            element={
+              token ? (
+                <Navigate to="/dashboard" />
+              ) : (
+                <Login setToken={setToken} />
+              )
+            }
+          />
+
+          <Route
+            path="/dashboard"
+            element={token ? <Dashboard /> : <Navigate to="/login" />}
+          />
+
+          <Route path="*" element={<Navigate to="/dashboard" />} />
+        </Routes>
+      </div>
+    </div>
   );
 }

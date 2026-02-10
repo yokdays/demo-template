@@ -47,7 +47,7 @@ export default function Login({ setToken }: LoginProps) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-8">
+    <div className="min-h-screen flex items-center justify-center px-8">
       <div>
         <form
           onSubmit={handleLogin}
@@ -89,7 +89,7 @@ export default function Login({ setToken }: LoginProps) {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 disabled:opacity-60"
+            className="w-full bg-[#00478E] text-white py-2 rounded hover:bg-[#00478E]/90 disabled:opacity-60"
           >
             {loading ? "Logging in..." : "Login"}
           </button>
