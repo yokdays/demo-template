@@ -1,8 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import ptt from "/src/images/ptt.png";
-import casia from "/src/images/c-asia.png";
+import thaipbs from "../images/thaipbs.png";
+import casia from "../images/c-asia.png";
 import ModernInput from "./input";
 
 interface LoginProps {
@@ -55,7 +55,7 @@ export default function Login({ setToken }: LoginProps) {
         >
           <div className="flex items-center justify-center gap-4">
             <img
-              src={ptt}
+              src={thaipbs}
               alt="PTT"
               className="h-12 sm:h-14 md:h-16 object-contain"
             />

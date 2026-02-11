@@ -120,22 +120,22 @@ app.get("/api/profile", authMiddleware, (req, res) => {
 
 app.get("/api/stats", authMiddleware, (req, res) => {
   res.json({
-    labels: ["ตอบแบบสอบถามครบถ้วน", "กำลังอยู่ในขั้นตอนตอบแบบสอบถาม"],
-    values: [60, 131],
+    labels: ["สำเร็จ", "ยังไม่สำเร็จ"],
+    values: [200, 4500],
   });
 });
 
 app.get("/api/insight", authMiddleware, (req, res) => {
   res.json({
-    labels: ["ตอบแบบสอบถามครบถ้วน", "กำลังอยู่ในขั้นตอนตอบแบบสอบถาม"],
-    values: [41, 122],
+    labels: ["ชาย", "หญิง"],
+    values: [32, 168],
   });
 });
 
 app.get("/api/outsight", authMiddleware, (req, res) => {
   res.json({
-    labels: ["ตอบแบบสอบถามครบถ้วน", "กำลังอยู่ในขั้นตอนตอบแบบสอบถาม"],
-    values: [19, 9],
+    labels: ["15-24 ปี", "25-34 ปี", "35-44 ปี", "45-54 ปี", "55-64 ปี", "65 ปีขึ้นไป"],
+    values: [23, 47, 30, 10, 70, 30]
   });
 });
 

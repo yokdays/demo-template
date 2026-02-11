@@ -1,11 +1,9 @@
 import React from "react";
-import ptt from "/src/images/ptt.png";
+import ptt from "/src/images/thaipbs.png";
 import casia from "/src/images/c-asia.png";
-import { useLogout } from "./Logout";
 
 export default function Navbar({ user }) {
-  const logout = useLogout();
-
+  console.log("Navbar user:", user);
   return (
     <nav
       className="
@@ -13,9 +11,9 @@ export default function Navbar({ user }) {
         flex items-center justify-between
 
         bg-gradient-to-r
-      from-white
-      via-[#00478E]/90
-      to-[#005689]
+        from-white
+        via-[#fddfcc]/90
+        to-[#fe5000]
 
         text-white
         backdrop-blur-md
@@ -56,6 +54,7 @@ export default function Navbar({ user }) {
                 className="text-sm text-white hover:underline"
                 onClick={() => {
                   localStorage.removeItem("token");
+                  localStorage.removeItem("user");
                   window.location.replace("/login");
                 }}
               >

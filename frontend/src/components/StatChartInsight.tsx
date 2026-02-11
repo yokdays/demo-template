@@ -1,17 +1,14 @@
-import { PieChart, Pie, Tooltip, ResponsiveContainer, Cell } from "recharts";
+import { PieChart, Pie,  ResponsiveContainer, Cell } from "recharts";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { PieChartIcon } from "lucide-react";
+import { VenusAndMarsIcon } from "lucide-react";
 
 interface PieData {
   name: string;
   value: number;
 }
 
-const COLORS = ["#005689", "#e0e0e0"];
-const renderLabel = ({ name, percent }: any) => {
-  return `${name} ${(percent * 100).toFixed(0)}%`;
-};
+const COLORS = ["#1800ad", "#fe5000"];
 
 export default function ChartInsight() {
   const [data, setData] = useState<PieData[]>([]);
@@ -32,7 +29,7 @@ export default function ChartInsight() {
   return (
     <div className="w-[20vw] bg-white rounded-xl shadow p-4 grid justify-center">
       <div>
-        <h2 className="text-lg font-bold mb-1 text-slate-800">กลุ่มลูกค้าในประเทศ</h2>
+        <h2 className="text-lg font-bold mb-1 text-slate-800">ภาพรวมชาย/หญิง</h2>
       </div>
       <div className="w-[18vw] h-[8vw]">
         <ResponsiveContainer>
@@ -54,27 +51,25 @@ export default function ChartInsight() {
               ))}
             </Pie>
 
-            {/* ICON */}
-            <foreignObject
+             <foreignObject
               x="50%"
-              y="45%"
+              y="50%"
               width="40"
               height="40"
               transform="translate(-20,-20)"
             >
-              <PieChartIcon className="w-6 h-6 text-slate-600 mx-auto" />
+              <VenusAndMarsIcon size={40} className="mx-auto" />
             </foreignObject>
-
-            {/* TOTAL */}
+{/*
             <text
               x="50%"
               y="60%"
               textAnchor="middle"
               dominantBaseline="middle"
-              className="text-lg font-bold fill-slate-800"
+              className="text-sm font-bold fill-slate-800"
             >
-              {data[0]?.value || 0}/{total}
-            </text>
+              {data[0]?.value || 0}/{data[1]?.value || 0}
+            </text> */}
           </PieChart>
         </ResponsiveContainer>
       </div>

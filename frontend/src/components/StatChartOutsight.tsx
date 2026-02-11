@@ -1,17 +1,20 @@
-import { PieChart, Pie, Tooltip, ResponsiveContainer, Cell } from "recharts";
+import { PieChart, Pie, ResponsiveContainer, Cell } from "recharts";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { PieChartIcon } from "lucide-react";
 
 interface PieData {
   name: string;
   value: number;
 }
 
-const COLORS = ["#005689", "#e0e0e0"];
-const renderLabel = ({ name, percent }: any) => {
-  return `${name} ${(percent * 100).toFixed(0)}%`;
-};
+const COLORS = [
+  "#f5f5f5", // ต่ำมาก / เด็ก
+  "#f9d5c0", // วัยรุ่น
+  "#f6b26b", // วัยทำงานต้น
+  "#f28c38", // วัยทำงานกลาง
+  "#fe5000", // วัยทำงานปลาย
+  "#9e1b10", // ผู้สูงอายุ / สูงสุด
+];
 
 export default function ChartOutsight() {
   const [data, setData] = useState<PieData[]>([]);
@@ -32,7 +35,7 @@ export default function ChartOutsight() {
   return (
     <div className="w-[20vw] bg-white rounded-xl shadow p-4 grid justify-center">
       <div>
-        <h2 className="text-lg font-bold mb-1 text-slate-800">กลุ่มลูกค้าต่างประเทศ</h2>
+        <h2 className="text-lg font-bold mb-1 text-slate-800">ภาพรวมอายุ</h2>
       </div>
       <div className="w-[18vw] h-[8vw]">
         <ResponsiveContainer>
@@ -53,8 +56,7 @@ export default function ChartOutsight() {
                 <Cell key={index} fill={COLORS[index % COLORS.length]} />
               ))}
             </Pie>
-
-            {/* ICON */}
+            {/* 
             <foreignObject
               x="50%"
               y="45%"
@@ -65,7 +67,6 @@ export default function ChartOutsight() {
               <PieChartIcon className="w-6 h-6 text-slate-600 mx-auto" />
             </foreignObject>
 
-            {/* TOTAL */}
             <text
               x="50%"
               y="60%"
@@ -74,17 +75,20 @@ export default function ChartOutsight() {
               className="text-lg font-bold fill-slate-800"
             >
               {data[0]?.value || 0}/{total}
-            </text>
+            </text> */}
           </PieChart>
         </ResponsiveContainer>
       </div>
 
       {/* LEGEND */}
       <div className="mt-4 space-y-2">
-      {data.map((d, i) => {
+        {data.map((d, i) => {
           const percent = ((d.value / total) * 100).toFixed(0);
           return (
-            <div key={i} className="grid grid-cols-[3fr_1fr] items-center justify-between text-sm">
+            <div
+              key={i}
+              className="grid grid-cols-[3fr_1fr] items-center justify-between text-sm"
+            >
               <div className="flex items-center gap-2">
                 <span
                   className="w-3 h-3 rounded-full"

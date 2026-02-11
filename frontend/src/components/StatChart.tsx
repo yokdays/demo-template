@@ -1,17 +1,15 @@
-import { PieChart, Pie, Tooltip, ResponsiveContainer, Cell } from "recharts";
+import { PieChart, Pie, ResponsiveContainer, Cell } from "recharts";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { PieChartIcon } from "lucide-react";
+import { PersonStandingIcon } from "lucide-react";
 
 interface PieData {
   name: string;
   value: number;
 }
 
-const COLORS = ["#005689", "#e0e0e0"];
-const renderLabel = ({ name, percent }: any) => {
-  return `${name} ${(percent * 100).toFixed(0)}%`;
-};
+const COLORS = ["#fe5000", "#e0e0e0"];
+
 
 export default function PieStats() {
   const [data, setData] = useState<PieData[]>([]);
@@ -32,7 +30,7 @@ export default function PieStats() {
   return (
     <div className="w-[20vw] bg-white rounded-xl shadow p-4 grid justify-center">
       <div>
-        <h2 className="text-lg font-bold mb-1 text-slate-800">กลุ่มลูกค้าทั้งในและต่างประเทศ</h2>
+        <h2 className="text-lg font-bold mb-1 text-slate-800">ภาพรวมทั้งหมด</h2>
       </div>
       <div className="w-[18vw] h-[8vw]">
         <ResponsiveContainer>
@@ -62,7 +60,7 @@ export default function PieStats() {
               height="40"
               transform="translate(-20,-20)"
             >
-              <PieChartIcon className="w-6 h-6 text-slate-600 mx-auto" />
+              <PersonStandingIcon size={25} className="mx-auto" />
             </foreignObject>
 
             {/* TOTAL */}
@@ -78,8 +76,6 @@ export default function PieStats() {
           </PieChart>
         </ResponsiveContainer>
       </div>
-
-      {/* LEGEND */}
       <div className="mt-4 space-y-2">
         {data.map((d, i) => {
           const percent = ((d.value / total) * 100).toFixed(0);
