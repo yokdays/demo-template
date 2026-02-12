@@ -80,7 +80,7 @@ export default function App() {
             element={token ? <Dashboard /> : <Navigate to="/login" replace />}
           />
           <Route
-            path="/bangkok"
+            path="/branch"
             element={token ? <Province /> : <Navigate to="/login" replace />}
           />
           <Route path="*" element={<Navigate to="/dashboard" replace />} />

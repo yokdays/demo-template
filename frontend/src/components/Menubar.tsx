@@ -7,13 +7,13 @@ export default function Menubar() {
 
   const linkStyle = "flex items-center gap-2 px-3 py-2 rounded-lg transition";
 
-  const activeStyle = "text-blue-600 border-b-2 border-blue-600 font-semibold";
+  const activeStyle = "text-black border-b-2 border-[#fe5000] bg-[#fff5f0]";
 
   const inactiveStyle = "text-slate-600 hover:bg-slate-100 hover:text-blue-600";
 
   return (
     <nav className="bg-white shadow border-b">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <div className="hidden md:flex items-center gap-4">
             <NavLink
@@ -24,26 +24,26 @@ export default function Menubar() {
               }
             >
               <LayoutDashboard size={18} />
-              Dashboard
+              ภาพรวมผลการสำรวจ
             </NavLink>
 
             <NavLink
-              to="/bangkok"
+              to="/branch"
               className={({ isActive }) =>
                 `${linkStyle} ${isActive ? activeStyle : inactiveStyle}`
               }
             >
               <Users size={18} />
-              Bangkok
+              ข้อมูลเชิงลึก
             </NavLink>
             <NavLink
-              to="/settings"
+              to="/analysis"
               className={({ isActive }) =>
                 `${linkStyle} ${isActive ? activeStyle : inactiveStyle}`
               }
             >
-              <Settings size={18} />
-              Settings
+              <Users size={18} />
+              ผลการวิเคราะห์
             </NavLink>
           </div>
 

@@ -10,7 +10,7 @@ export default function ModernInput({
         <input
           type={type}
           value={value}
-          onChange={onChange}
+          onChange={onChange}    
           required={required}
           placeholder=" "
           className="
