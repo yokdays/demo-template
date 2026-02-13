@@ -11,7 +11,6 @@ dotenv.config();
 
 const app = express();
 
-/* ---------------- BASIC CONFIG ---------------- */
 app.use(express.json());
 
 app.use(
@@ -30,6 +29,80 @@ const users = [
   },
 ];
 
+const REGION_DATA = {
+  bkk: { inArea: 450, outArea: 280 },
+  north: { inArea: 410, outArea: 142 },
+  northeast: { inArea: 450, outArea: 255 },
+  central: { inArea: 338, outArea: 238 },
+  south: { inArea: 213, outArea: 170 },
+};
+const REGION_DATA2 = {
+  bkk: { inArea: 370, outArea: 360 },
+  north: { inArea: 223, outArea: 329 },
+  northeast: { inArea: 405, outArea: 300 },
+  central: { inArea: 290, outArea: 286 },
+  south: { inArea: 253, outArea: 130 },
+};
+
+const Summary = {
+  summary: [
+    {
+      name: "กรุงเทพและปริมณฑล",
+      ageGroups: {
+        total: {
+          Quota: 1200,
+          Success: 730,
+          male: { Quota: 575, Success: 348 },
+          female: { Quota: 625, Success: 382 },
+        },
+      },
+    },
+    {
+      name: "ภาคเหนือ",
+      ageGroups: {
+        total: {
+          Quota: 900,
+          Success: 546,
+          male: { Quota: 432, Success: 262 },
+          female: { Quota: 468, Success: 284 },
+        },
+      },
+    },
+    {
+      name: "ภาคตะวันออกเฉียงเหนือ",
+      ageGroups: {
+        total: {
+          Quota: 1100,
+          Success: 667,
+          male: { Quota: 528, Success: 320 },
+          female: { Quota: 572, Success: 347 },
+        },
+      },
+    },
+    {
+      name: "ภาคกลาง/ตะวันออก/ตะวันตก",
+      ageGroups: {
+        total: {
+          Quota: 950,
+          Success: 576,
+          male: { Quota: 456, Success: 276 },
+          female: { Quota: 494, Success: 300 },
+        },
+      },
+    },
+    {
+      name: "ภาคใต้",
+      ageGroups: {
+        total: {
+          Quota: 633,
+          Success: 383,
+          male: { Quota: 303, Success: 183 },
+          female: { Quota: 330, Success: 200 },
+        },
+      },
+    },
+  ],
+};
 const authMiddleware = (req, res, next) => {
   const authHeader = req.headers.authorization;
 
@@ -113,81 +186,6 @@ app.get("/api/profile", authMiddleware, (req, res) => {
   });
 });
 
-const REGION_DATA = {
-  bkk: { inArea: 450, outArea: 280 },
-  north: { inArea: 410, outArea: 142 },
-  northeast: { inArea: 450, outArea: 255 },
-  central: { inArea: 338, outArea: 238 },
-  south: { inArea: 213, outArea: 170 },
-};
-const REGION_DATA2 = {
-  bkk: { inArea: 370, outArea: 360 },
-  north: { inArea: 223, outArea: 329 },
-  northeast: { inArea: 405, outArea: 300 },
-  central: { inArea: 290, outArea: 286 },
-  south: { inArea: 253, outArea: 130 },
-};
-
-const Summary = {
-  summary: [
-    {
-      name: "กรุงเทพและปริมณฑล",
-      ageGroups: {
-        total: {
-          Quota: 1200,
-          Success: 730,
-          male: { Quota: 575, Success: 348 },
-          female: { Quota: 625, Success: 382 },
-        },
-      },
-    },
-    {
-      name: "ภาคเหนือ",
-      ageGroups: {
-        total: {
-          Quota: 900,
-          Success: 546,
-          male: { Quota: 432, Success: 262 },
-          female: { Quota: 468, Success: 284 },
-        },
-      },
-    },
-    {
-      name: "ภาคตะวันออกเฉียงเหนือ",
-      ageGroups: {
-        total: {
-          Quota: 1100,
-          Success: 667,
-          male: { Quota: 528, Success: 320 },
-          female: { Quota: 572, Success: 347 },
-        },
-      },
-    },
-    {
-      name: "ภาคกลาง/ตะวันออก/ตะวันตก",
-      ageGroups: {
-        total: {
-          Quota: 950,
-          Success: 576,
-          male: { Quota: 456, Success: 276 },
-          female: { Quota: 494, Success: 300 },
-        },
-      },
-    },
-    {
-      name: "ภาคใต้",
-      ageGroups: {
-        total: {
-          Quota: 633,
-          Success: 383,
-          male: { Quota: 303, Success: 183 },
-          female: { Quota: 330, Success: 200 },
-        },
-      },
-    },
-  ],
-};
-
 app.get("/api/summary-report", (req, res) => {
   let grandQuota = 0;
   let grandSuccess = 0;
@@ -245,7 +243,6 @@ app.get("/api/summary-report", (req, res) => {
 app.get("/api/inout", (req, res) => {
   const { region } = req.query;
 
-  // ถ้าไม่ส่ง region → คืนทุกภาคเป็น array
   if (!region) {
     return res.json(Object.values(REGION_DATA));
   }
@@ -278,7 +275,6 @@ app.get("/api/inout2", (req, res) => {
 
   res.json(REGION_DATA2[regionKey]);
 });
-
 
 app.get("/api/progress", (req, res) => {
   const { region } = req.query;
@@ -343,7 +339,6 @@ app.get("/api/progress", (req, res) => {
   res.json(calculateTotals(progressData[region]));
 });
 
-/* ---------------- START SERVER ---------------- */
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, "0.0.0.0", () => {
