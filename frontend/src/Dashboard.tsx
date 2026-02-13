@@ -1,12 +1,13 @@
 import ProgressBar from "./components/progress-bar";
 import Progress from "./components/Progress";
 import Inout from "./components/Inout_dashboard";
+import Inout2 from "./components/Inout2_dashboard";
 import AgeProgressChart from "./components/AgeProgress";
 export default function App() {
   return (
     <>
       <div className="min-h-screen flex justify-center py-4">
-        <div className="space-y-4 w-[80vw] bg-white p-6 rounded-lg shadow-md">
+        <div className="space-y-4 w-[80vw] bg-white p-6 rounded-xl shadow-md">
           <p className="text-4xl font-semibold text-slate-800 text-[#fe5000]">
             โครงการเก็บรวบรวมข้อมูลเชิงปริมาณเพื่อประเมินการรับรู้และการยอมรับของสังคมต่อบทบาทสื่อสาธารณะของ
             ส.ส.ท.
@@ -29,8 +30,8 @@ export default function App() {
             />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 min-w-0">
-            <Inout inArea={2400} outArea={1800} />
-            <Inout inArea={2400} outArea={1800} />
+            <Inout inArea={1861} outArea={1085} />
+            <Inout2 inArea={1541} outArea={1405} />
             <AgeProgressChart
               data={[
                 { age: "รวมทั้งหมด", Quota: 5010, Success: 2936 },

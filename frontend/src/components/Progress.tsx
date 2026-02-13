@@ -70,7 +70,7 @@ export default function Progress() {
 function SectionTable({ title, data }) {
   return (
     <div className="w-full">
-      <div className="bg-[#fe5000] text-white font-semibold px-4 py-4 text-xl rounded-t-xl">
+      <div className="bg-[#533D32] text-white font-semibold px-4 py-4 text-xl rounded-t-xl">
         {title}
       </div>
 
@@ -92,7 +92,7 @@ function SectionTable({ title, data }) {
                 {/* {title} */}
               </th>
               {AGE_COLUMNS.map((col) => (
-                <th key={col.key} colSpan={2} className="px-4 py-3 text-center">
+                <th key={col.key} colSpan={2} className="px-4 py-3 text-center bg-[#533D32] text-white">
                   {col.label}
                 </th>
               ))}
@@ -101,8 +101,8 @@ function SectionTable({ title, data }) {
             <tr className="bg-gray-50 text-gray-500">
               {AGE_COLUMNS.map((col) => (
                 <React.Fragment key={col.key}>
-                  <th className="px-4 py-2 text-center">สำเร็จ</th>
-                  <th className="px-4 py-2 text-center">โควต้า</th>
+                  <th className="px-4 py-2 text-center bg-[#2563EB] text-white">โควต้า</th>
+                  <th className="px-4 py-2 text-center bg-[#fe5000] text-white">สำเร็จ</th>
                 </React.Fragment>
               ))}
             </tr>
@@ -110,8 +110,8 @@ function SectionTable({ title, data }) {
 
           <tbody>
             {data.map((group : any) => (
-              <tr key={group.name} className="border-b hover:bg-gray-50">
-                <td className="px-4 py-3 font-medium whitespace-nowrap">
+              <tr key={group.name} className="border-b hover:bg-[#2563EB]/10">
+                <td className="px-4 py-3 font-medium whitespace-nowrap border border-l">
                   {group.name}
                 </td>
 
@@ -119,11 +119,11 @@ function SectionTable({ title, data }) {
                   const values = group.ageGroups[col.key];
                   return (
                     <React.Fragment key={col.key}>
-                      <td className="px-4 py-3 text-center text-[#FE5102] font-semibold tabular-nums">
-                        {values?.Success ?? 0}
-                      </td>
-                      <td className="px-4 py-3 text-center text-gray-600 font-semibold tabular-nums">
+                      <td className="px-4 py-3 text-center text-[#2563EB] font-semibold tabular-nums ">
                         {values?.Quota ?? 0}
+                      </td>
+                      <td className="px-4 py-3 text-center text-[#fe5000] bg-[#fe5000]/10 font-semibold tabular-nums">
+                        {values?.Success ?? 0}
                       </td>
                     </React.Fragment>
                   );

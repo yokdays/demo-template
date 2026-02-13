@@ -398,7 +398,6 @@ export default function Branch() {
 
             {AGE_COLUMNS.map((col) => {
               const values = ageTotals?.[col.key];
-
               return (
                 <React.Fragment key={col.key}>
                   <td className="px-4 py-3 text-center border text-blue-700">

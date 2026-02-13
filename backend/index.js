@@ -103,6 +103,7 @@ const Summary = {
     },
   ],
 };
+
 const authMiddleware = (req, res, next) => {
   const authHeader = req.headers.authorization;
 
@@ -277,6 +278,7 @@ app.get("/api/inout2", (req, res) => {
 });
 
 app.get("/api/progress", (req, res) => {
+
   const { region } = req.query;
 
   const calculateTotals = (regionArray) => {

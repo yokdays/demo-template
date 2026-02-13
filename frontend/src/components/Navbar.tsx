@@ -1,8 +1,19 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import ptt from "/src/images/thaipbs.png";
-import casia from "/src/images/c-asia.png";
+import casia from "../images/c-asia.png";
 
-export default function Navbar({ user }) {
+interface User {
+  id: number;
+  name: string;
+  email?: string;
+}
+
+interface NavbarProps {
+  user: User | null;
+  setToken: Dispatch<SetStateAction<string | null>>;
+}
+
+export default function Navbar({ user, setToken }: NavbarProps) {
   console.log("Navbar user:", user);
   return (
     <nav
@@ -55,7 +66,7 @@ export default function Navbar({ user }) {
                 onClick={() => {
                   localStorage.removeItem("token");
                   localStorage.removeItem("user");
-                  window.location.replace("/login");
+                  setToken(null);
                 }}
               >
                 ออกจากระบบ
