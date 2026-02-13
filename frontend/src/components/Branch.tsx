@@ -75,33 +75,33 @@ export default function Branch() {
   const regions: Region[] = apiData?.[selectedKey] ?? [];
   const ageTotals = calculateAgeTotals(regions);
   const total = regions.reduce(
-  (acc, province) => {
-    const t = province.ageGroups?.total;
+    (acc, province) => {
+      const t = province.ageGroups?.total;
 
-    if (!t) return acc;
+      if (!t) return acc;
 
-    return {
-      Quota: acc.Quota + (t.Quota || 0),
-      Success: acc.Success + (t.Success || 0),
+      return {
+        Quota: acc.Quota + (t.Quota || 0),
+        Success: acc.Success + (t.Success || 0),
 
-      male: {
-        Quota: acc.male.Quota + (t.male?.Quota || 0),
-        Success: acc.male.Success + (t.male?.Success || 0),
-      },
+        male: {
+          Quota: acc.male.Quota + (t.male?.Quota || 0),
+          Success: acc.male.Success + (t.male?.Success || 0),
+        },
 
-      female: {
-        Quota: acc.female.Quota + (t.female?.Quota || 0),
-        Success: acc.female.Success + (t.female?.Success || 0),
-      },
-    };
-  },
-  {
-    Quota: 0,
-    Success: 0,
-    male: { Quota: 0, Success: 0 },
-    female: { Quota: 0, Success: 0 },
-  }
-);
+        female: {
+          Quota: acc.female.Quota + (t.female?.Quota || 0),
+          Success: acc.female.Success + (t.female?.Success || 0),
+        },
+      };
+    },
+    {
+      Quota: 0,
+      Success: 0,
+      male: { Quota: 0, Success: 0 },
+      female: { Quota: 0, Success: 0 },
+    },
+  );
 
   const handleRegionGroupChange = (key: keyof ApiResponse) => {
     setSelectedKey(key);
@@ -114,6 +114,46 @@ export default function Branch() {
       </div>
     );
   }
+  const grandTotal = AGE_COLUMNS.reduce(
+    (acc, col) => {
+      const values = ageTotals?.[col.key];
+
+      acc.quota += (values?.male?.Quota ?? 0) + (values?.female?.Quota ?? 0);
+      acc.success +=
+        (values?.male?.Success ?? 0) + (values?.female?.Success ?? 0);
+
+      return acc;
+    },
+    { quota: 0, success: 0 },
+  );
+
+  const grandTotalMale = regions.reduce(
+    (acc, region) => {
+      AGE_COLUMNS.forEach((col) => {
+        const values = region.ageGroups?.[col.key];
+
+        acc.quota += values?.male?.Quota ?? 0;
+        acc.success += values?.male?.Success ?? 0;
+      });
+
+      return acc;
+    },
+    { quota: 0, success: 0 },
+  );
+
+    const grandTotalFemale = regions.reduce(
+    (acc, region) => {
+      AGE_COLUMNS.forEach((col) => {
+        const values = region.ageGroups?.[col.key];
+
+        acc.quota += values?.female?.Quota ?? 0;
+        acc.success += values?.female?.Success ?? 0;
+      });
+
+      return acc;
+    },
+    { quota: 0, success: 0 },
+  );
 
   return (
     <div className="p-6 bg-white rounded-xl space-y-6">
@@ -142,12 +182,12 @@ export default function Branch() {
         <ProgressBar
           heading="จำนวนการเก็บข้อมูลเพศชาย"
           value={total?.male?.Success ?? 0}
-          total={total?.male?.Quota ?? 0}
+          total={total?.Success ?? 0}
         />
         <ProgressBar
           heading="จำนวนการเก็บข้อมูลเพศหญิง"
           value={total?.female?.Success ?? 0}
-          total={total?.female?.Quota ?? 0}
+          total={total?.Success ?? 0}
         />
       </div>
 
@@ -156,14 +196,19 @@ export default function Branch() {
         <Inout2 region={selectedKey} />
         <ProvinceProgressChart regions={regions} />
       </div>
-
-      {/* Male Table */}
       <div className="overflow-x-auto">
-        <p className="font-semibold text-blue-600 mb-2">เพศชาย</p>
+        <p className="font-semibold text-blue-600 mb-2">รวม</p>
         <table className="min-w-full border-collapse text-sm">
           <thead>
             <tr className="bg-gray-100 text-gray-700">
               <th className="px-4 py-3 text-left border">จังหวัด</th>
+              <th
+                colSpan={2}
+                className="px-4 py-3 text-center border bg-blue-50"
+              >
+                รวมทั้งหมด
+              </th>
+
               {AGE_COLUMNS.map((col) => (
                 <th
                   key={col.key}
@@ -176,6 +221,12 @@ export default function Branch() {
             </tr>
             <tr className="bg-gray-50">
               <th className="border"></th>
+              <th className="px-4 py-2 text-center border bg-blue-700 text-white">
+                โควต้า
+              </th>
+              <th className="px-4 py-2 text-center border bg-orange-500 text-white">
+                สำเร็จ
+              </th>
               {AGE_COLUMNS.map((col) => (
                 <React.Fragment key={col.key}>
                   <th className="px-4 py-2 text-center border bg-blue-600 text-white">
@@ -189,33 +240,165 @@ export default function Branch() {
             </tr>
           </thead>
           <tbody>
-            {regions.map((region) => (
-              <tr
-                key={region.name}
-                className="border-b hover:bg-blue-50 transition"
-              >
-                <td className="px-4 py-3 font-medium border">{region.name}</td>
-                {AGE_COLUMNS.map((col) => {
-                  const values = region.ageGroups?.[col.key];
-                  return (
-                    <React.Fragment key={col.key}>
-                      <td className="px-4 py-3 text-center border font-semibold text-blue-600">
-                        {values?.male?.Quota ?? 0}
-                      </td>
-                      <td className="px-4 py-3 text-center border bg-[#fe5000]/10 text-[#fe5000]">
-                        {values?.male?.Success ?? 0}
-                      </td>
-                    </React.Fragment>
-                  );
-                })}
-              </tr>
-            ))}
+            {regions.map((region) => {
+              const provinceTotal = calculateProvinceTotal(region);
+
+              return (
+                <tr
+                  key={region.name}
+                  className="border-b hover:bg-blue-50 transition"
+                >
+                  <td className="px-4 py-3 font-medium border">
+                    {region.name}
+                  </td>
+
+                  <td className="px-4 py-3 text-center border font-bold text-blue-700 bg-blue-50">
+                    {provinceTotal.quota}
+                  </td>
+                  <td className="px-4 py-3 text-center border font-bold text-orange-600 bg-orange-50">
+                    {provinceTotal.success}
+                  </td>
+
+                  {/* ของเดิม */}
+                  {AGE_COLUMNS.map((col) => {
+                    const values = region.ageGroups?.[col.key];
+
+                    return (
+                      <React.Fragment key={col.key}>
+                        <td className="px-4 py-3 text-center border font-semibold text-blue-600">
+                          {(values?.male?.Quota ?? 0) +
+                            (values?.female?.Quota ?? 0)}
+                        </td>
+                        <td className="px-4 py-3 text-center border bg-[#fe5000]/10 text-[#fe5000]">
+                          {(values?.male?.Success ?? 0) +
+                            (values?.female?.Success ?? 0)}
+                        </td>
+                      </React.Fragment>
+                    );
+                  })}
+                </tr>
+              );
+            })}
           </tbody>
-          {/* แถวรวม */}
           <tr className="bg-blue-100 font-semibold">
             <td className="px-4 py-3 border">รวมทั้งหมด</td>
+            <td className="px-4 py-3 text-center border text-blue-800 font-bold">
+              {grandTotal.quota}
+            </td>
+            <td className="px-4 py-3 text-center border text-orange-700 font-bold">
+              {grandTotal.success}
+            </td>
+
             {AGE_COLUMNS.map((col) => {
               const values = ageTotals?.[col.key];
+
+              return (
+                <React.Fragment key={col.key}>
+                  <td className="px-4 py-3 text-center border text-blue-700">
+                    {(values?.male?.Quota ?? 0) + (values?.female?.Quota ?? 0)}
+                  </td>
+                  <td className="px-4 py-3 text-center border text-orange-600">
+                    {(values?.male?.Success ?? 0) +
+                      (values?.female?.Success ?? 0)}
+                  </td>
+                </React.Fragment>
+              );
+            })}
+          </tr>
+        </table>
+      </div>
+      <div className="overflow-x-auto">
+        <p className="font-semibold text-blue-600 mb-2">เพศชาย</p>
+        <table className="min-w-full border-collapse text-sm">
+          <thead>
+            <tr className="bg-gray-100 text-gray-700">
+              <th className="px-4 py-3 text-left border">จังหวัด</th>
+              <th
+                colSpan={2}
+                className="px-4 py-3 text-center border bg-blue-50"
+              >
+                รวมทั้งหมด
+              </th>
+
+              {AGE_COLUMNS.map((col) => (
+                <th
+                  key={col.key}
+                  colSpan={2}
+                  className="px-4 py-3 text-center border"
+                >
+                  {col.label}
+                </th>
+              ))}
+            </tr>
+            <tr className="bg-gray-50">
+              <th className="border"></th>
+              <th className="px-4 py-2 text-center border bg-blue-700 text-white">
+                โควต้า
+              </th>
+              <th className="px-4 py-2 text-center border bg-orange-500 text-white">
+                สำเร็จ
+              </th>
+              {AGE_COLUMNS.map((col) => (
+                <React.Fragment key={col.key}>
+                  <th className="px-4 py-2 text-center border bg-blue-600 text-white">
+                    โควต้า
+                  </th>
+                  <th className="px-4 py-2 text-center border bg-[#fe5000] text-white">
+                    สำเร็จ
+                  </th>
+                </React.Fragment>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {regions.map((region) => {
+              const provinceTotal = calculateProvinceTotalMale(region);
+              return (
+                <tr
+                  key={region.name}
+                  className="border-b hover:bg-blue-50 transition"
+                >
+                  <td className="px-4 py-3 font-medium border">
+                    {region.name}
+                  </td>
+
+                  <td className="px-4 py-3 text-center border font-bold text-blue-700 bg-blue-50">
+                    {provinceTotal.quota}
+                  </td>
+                  <td className="px-4 py-3 text-center border font-bold text-orange-600 bg-orange-50">
+                    {provinceTotal.success}
+                  </td>
+
+                  {AGE_COLUMNS.map((col) => {
+                    const values = region.ageGroups?.[col.key];
+
+                    return (
+                      <React.Fragment key={col.key}>
+                        <td className="px-4 py-3 text-center border font-semibold text-blue-600">
+                          {values?.male?.Quota ?? 0}
+                        </td>
+                        <td className="px-4 py-3 text-center border bg-[#fe5000]/10 text-[#fe5000]">
+                          {values?.male?.Success ?? 0}
+                        </td>
+                      </React.Fragment>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+          <tr className="bg-blue-100 font-semibold">
+            <td className="px-4 py-3 border">รวมทั้งหมด</td>
+            <td className="px-4 py-3 text-center border text-blue-800 font-bold">
+              {grandTotalMale.quota}
+            </td>
+            <td className="px-4 py-3 text-center border text-orange-700 font-bold">
+              {grandTotalMale.success}
+            </td>
+
+            {AGE_COLUMNS.map((col) => {
+              const values = ageTotals?.[col.key];
+
               return (
                 <React.Fragment key={col.key}>
                   <td className="px-4 py-3 text-center border text-blue-700">
@@ -230,14 +413,19 @@ export default function Branch() {
           </tr>
         </table>
       </div>
-
-      {/* Female Table */}
       <div className="overflow-x-auto">
         <p className="font-semibold text-blue-600 mb-2">เพศหญิง</p>
         <table className="min-w-full border-collapse text-sm">
           <thead>
             <tr className="bg-gray-100 text-gray-700">
               <th className="px-4 py-3 text-left border">จังหวัด</th>
+              <th
+                colSpan={2}
+                className="px-4 py-3 text-center border bg-blue-50"
+              >
+                รวมทั้งหมด
+              </th>
+
               {AGE_COLUMNS.map((col) => (
                 <th
                   key={col.key}
@@ -250,6 +438,12 @@ export default function Branch() {
             </tr>
             <tr className="bg-gray-50">
               <th className="border"></th>
+              <th className="px-4 py-2 text-center border bg-blue-700 text-white">
+                โควต้า
+              </th>
+              <th className="px-4 py-2 text-center border bg-orange-500 text-white">
+                สำเร็จ
+              </th>
               {AGE_COLUMNS.map((col) => (
                 <React.Fragment key={col.key}>
                   <th className="px-4 py-2 text-center border bg-blue-600 text-white">
@@ -263,32 +457,54 @@ export default function Branch() {
             </tr>
           </thead>
           <tbody>
-            {regions.map((region) => (
-              <tr
-                key={region.name}
-                className="border-b hover:bg-blue-50 transition"
-              >
-                <td className="px-4 py-3 font-medium border">{region.name}</td>
-                {AGE_COLUMNS.map((col) => {
-                  const values = region.ageGroups?.[col.key];
-                  return (
-                    <React.Fragment key={col.key}>
-                      <td className="px-4 py-3 text-center border font-semibold text-blue-600">
-                        {values?.female?.Quota ?? 0}
-                      </td>
-                      <td className="px-4 py-3 text-center border bg-[#fe5000]/10 text-[#fe5000]">
-                        {values?.female?.Success ?? 0}
-                      </td>
-                    </React.Fragment>
-                  );
-                })}
-              </tr>
-            ))}
+            {regions.map((region) => {
+              const provinceTotal = calculateProvinceTotalFeMale(region);
+              return (
+                <tr
+                  key={region.name}
+                  className="border-b hover:bg-blue-50 transition"
+                >
+                  <td className="px-4 py-3 font-medium border">
+                    {region.name}
+                  </td>
+
+                  <td className="px-4 py-3 text-center border font-bold text-blue-700 bg-blue-50">
+                    {provinceTotal.quota}
+                  </td>
+                  <td className="px-4 py-3 text-center border font-bold text-orange-600 bg-orange-50">
+                    {provinceTotal.success}
+                  </td>
+
+                  {AGE_COLUMNS.map((col) => {
+                    const values = region.ageGroups?.[col.key];
+
+                    return (
+                      <React.Fragment key={col.key}>
+                        <td className="px-4 py-3 text-center border font-semibold text-blue-600">
+                          {values?.female?.Quota ?? 0}
+                        </td>
+                        <td className="px-4 py-3 text-center border bg-[#fe5000]/10 text-[#fe5000]">
+                          {values?.female?.Success ?? 0}
+                        </td>
+                      </React.Fragment>
+                    );
+                  })}
+                </tr>
+              );
+            })}
           </tbody>
           <tr className="bg-blue-100 font-semibold">
             <td className="px-4 py-3 border">รวมทั้งหมด</td>
+            <td className="px-4 py-3 text-center border text-blue-800 font-bold">
+              {grandTotalFemale.quota}
+            </td>
+            <td className="px-4 py-3 text-center border text-orange-700 font-bold">
+              {grandTotalFemale.success}
+            </td>
+
             {AGE_COLUMNS.map((col) => {
               const values = ageTotals?.[col.key];
+
               return (
                 <React.Fragment key={col.key}>
                   <td className="px-4 py-3 text-center border text-blue-700">
@@ -306,6 +522,22 @@ export default function Branch() {
     </div>
   );
 }
+
+const calculateProvinceTotal = (region: any) => {
+  return AGE_COLUMNS.reduce(
+    (acc, col) => {
+      const values = region.ageGroups?.[col.key];
+
+      acc.quota += (values?.male?.Quota ?? 0) + (values?.female?.Quota ?? 0);
+      acc.success +=
+        (values?.male?.Success ?? 0) + (values?.female?.Success ?? 0);
+
+      return acc;
+    },
+    { quota: 0, success: 0 },
+  );
+};
+
 function calculateAgeTotals(regions: Region[]) {
   const ageTotals: Record<string, AgeGroup> = {};
 
@@ -336,3 +568,31 @@ function calculateAgeTotals(regions: Region[]) {
 
   return ageTotals;
 }
+
+const calculateProvinceTotalMale = (region: any) => {
+  return AGE_COLUMNS.reduce(
+    (acc, col) => {
+      const values = region.ageGroups?.[col.key];
+
+      acc.quota += values?.male?.Quota ?? 0;
+      acc.success += values?.male?.Success ?? 0;
+
+      return acc;
+    },
+    { quota: 0, success: 0 },
+  );
+};
+
+const calculateProvinceTotalFeMale = (region: any) => {
+  return AGE_COLUMNS.reduce(
+    (acc, col) => {
+      const values = region.ageGroups?.[col.key];
+
+      acc.quota += values?.female?.Quota ?? 0;
+      acc.success += values?.female?.Success ?? 0;
+
+      return acc;
+    },
+    { quota: 0, success: 0 },
+  );
+};

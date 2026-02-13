@@ -62,8 +62,8 @@ export default function App() {
 
       <div className="relative z-10 min-h-screen">
         {token && <Navbar user={user} setToken={setToken} />}
-        <Menubar />
-
+        {token && <Menubar setToken={setToken} />}
+        
         <Routes>
           <Route
             path="/login"

@@ -20,12 +20,12 @@ export default function App() {
             <ProgressBar
               heading="จำนวนการเก็บข้อมูลเพศชาย"
               value={1380}
-              total={2368}
+              total={2936}
             />
             <ProgressBar
               heading="จำนวนการเก็บข้อมูลเพศหญิง"
               value={1556}
-              total={2643}
+              total={2936}
             />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 min-w-0">

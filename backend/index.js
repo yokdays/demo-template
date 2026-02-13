@@ -347,7 +347,7 @@ app.get("/api/progress", (req, res) => {
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, "0.0.0.0", () => {
-  console.log("🚀 Backend running");
+  console.log("Backend running");
   console.log(`   http://localhost:${PORT}`);
   console.log("JWT_SECRET:", process.env.JWT_SECRET ? "LOADED" : "MISSING");
 });
