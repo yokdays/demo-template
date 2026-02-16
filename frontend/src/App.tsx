@@ -10,15 +10,20 @@ import Menubar from "./components/menubar";
 import Analysis from "./Analysis";
 
 export default function App() {
-  const [token, setToken] = useState<string | null>(null);
+  const [token, setToken] = useState<string | null>(
+    localStorage.getItem("token"),
+  );
+
+  const [user, setUser] = useState<any>(() => {
+    const stored = localStorage.getItem("user");
+    return stored ? JSON.parse(stored) : null;
+  });
+
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
-    const initAuth = async () => {
-      const storedToken = localStorage.getItem("token");
-
-      if (!storedToken) {
+    const validateToken = async () => {
+      if (!token) {
         setLoading(false);
         return;
       }
@@ -26,23 +31,25 @@ export default function App() {
       try {
         const response = await axios.get("/api/profile", {
           headers: {
-            Authorization: `Bearer ${storedToken}`,
+            Authorization: `Bearer ${token}`,
           },
         });
 
         setUser(response.data.user);
-        setToken(storedToken);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
       } catch (error) {
         console.error("Token invalid:", error);
         localStorage.removeItem("token");
+        localStorage.removeItem("user");
         setToken(null);
+        setUser(null);
       }
 
       setLoading(false);
     };
 
-    initAuth();
-  }, []);
+    validateToken();
+  }, [token]);
 
   if (loading) {
     return (

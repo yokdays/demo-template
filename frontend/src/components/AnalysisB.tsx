@@ -138,7 +138,7 @@ export default function AnalysisB() {
               datasets={[
                 {
                   key: "B",
-                  label: "มีค่าถ่วงน้ำหนัก",
+                  label: "ไม่มีค่าถ่วงน้ำหนัก",
                   data: [
                     61.386, 28.395, 6.94, 5.27, 8.42, 3.12, 7.73, 4.64, 5.61,
                     4.72,
@@ -170,12 +170,12 @@ export default function AnalysisB() {
               datasets={[
                 {
                   key: "B",
-                  label: "มีค่าถ่วงน้ำหนัก",
+                  label: "ไม่มีค่าถ่วงน้ำหนัก",
                   data: [
                     61.386, 28.395, 6.94, 5.27, 8.42, 3.12, 7.73, 4.64, 5.61,
                     4.72,
                   ],
-                  color: "#f97316",
+                  color: "#fe5000",
                 },
               ]}
             />
@@ -202,7 +202,7 @@ export default function AnalysisB() {
               datasets={[
                 {
                   key: "B",
-                  label: "มีค่าถ่วงน้ำหนัก",
+                  label: "ไม่มีค่าถ่วงน้ำหนัก",
                   data: [
                     61.386, 28.395, 6.94, 5.27, 8.42, 3.12, 7.73, 4.64, 5.61,
                     4.72,

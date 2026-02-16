@@ -89,21 +89,21 @@ export default function AgeProgressChart({ regions }: Props) {
 
       <div className="grid grid-cols-3 gap-4 mb-8">
         <div className="bg-slate-50 rounded-xl p-4">
-          <p className="text-xs text-slate-500">Quota รวม</p>
+          <p className="text-xs text-slate-500">Quota</p>
           <p className="text-xl font-bold text-[#0c5ca4]">
             {grandTotal.Quota.toLocaleString()}
           </p>
         </div>
 
         <div className="bg-slate-50 rounded-xl p-4">
-          <p className="text-xs text-slate-500">Success รวม</p>
+          <p className="text-xs text-slate-500">Success</p>
           <p className="text-xl font-bold text-[#fe5000]">
             {grandTotal.Success.toLocaleString()}
           </p>
         </div>
 
         <div className="bg-slate-50 rounded-xl p-4">
-          <p className="text-xs text-slate-500">Completion Rate</p>
+          <p className="text-xs text-slate-500">Completion</p>
           <p className="text-xl font-bold text-slate-700">
             {completionRate}%
           </p>

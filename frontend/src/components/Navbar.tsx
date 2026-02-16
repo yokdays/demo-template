@@ -30,18 +30,17 @@ export default function Navbar({ user, setToken }: NavbarProps) {
         shadow-sm
       "
     >
-      {/* LEFT SIDE */}
       <a href="/dashboard" className="flex items-center gap-3 group">
         <div className="flex items-center gap-3 hover:scale-[1.02] transition">
           <img
             src={ptt}
             alt="ThaiPBS"
-            className="h-10 object-contain"
+            className="w-20 object-contain"
           />
           <img
             src={casia}
             alt="C-Asia"
-            className="h-8 object-contain mt-1"
+            className="w-20 object-contain mt-4"
           />
         </div>
       </a>
