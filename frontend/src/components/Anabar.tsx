@@ -41,6 +41,7 @@ export default function Anabar({
   return (
     <div className="my-4">
       {/* <h2 className="text-lg font-semibold mb-4">{heading}</h2> */}
+      
       <h2 className="text-lg font-semibold mb-4">{heading2}</h2>
 
       <div className="w-full h-[500px]">

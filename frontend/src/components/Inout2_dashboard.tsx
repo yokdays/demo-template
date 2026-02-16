@@ -11,7 +11,8 @@ interface PieData {
   value: number;
 }
 
-const COLORS = ["#fe5000", "#2563eb"];
+const COLORS = ["#FFAD39", "#b43900CC"];
+
 
 export default function InoutDashboard({ inArea, outArea }: Props) {
   const data: PieData[] = [
@@ -22,59 +23,57 @@ export default function InoutDashboard({ inArea, outArea }: Props) {
   const total = inArea + outArea;
 
   return (
-    <div className="bg-white rounded-xl shadow p-4 grid justify-center w-full">
+    <div className="bg-white rounded-xl shadow p-4 grid w-full">
       <div>
-        <h2 className="text-lg font-bold mb-1 text-slate-800">
+        <h2 className="text-lg font-semibold mb-1 text-slate-800">
           สัดส่วนพื้นที่ในและนอกเขตเทศบาล
         </h2>
       </div>
 
-      <div className="w-[14vw] h-[14vw] mx-auto flex items-center justify-center">
-        <ResponsiveContainer width="100%" height="100%">
-          <PieChart>
-            <Pie
-              data={data}
-              dataKey="value"
-              innerRadius="75%"
-              outerRadius="100%"
-              paddingAngle={5}
-              cx="50%"
-              cy="50%"
-              cornerRadius={20}
-              startAngle={90}
-              endAngle={-270}
-            >
-              {data.map((_, index) => (
-                <Cell key={index} fill={COLORS[index % COLORS.length]} />
-              ))}
-            </Pie>
+             <div className="w-full max-w-[160px] sm:max-w-[200px] md:max-w-[240px] mx-auto aspect-square">
 
-            {/* ICON */}
-            <foreignObject
-              x="50%"
-              y="45%"
-              width="40"
-              height="40"
-              transform="translate(-20,-20)"
-            >
-              <MapPinIcon size={25} className="mx-auto text-slate-700" />
-            </foreignObject>
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={data}
+                      dataKey="value"
+                      innerRadius="70%"
+                      outerRadius="100%"
+                      paddingAngle={4}
+                      cornerRadius={8}
+                      startAngle={90}
+                      endAngle={-270}
+                    >
+                      {data.map((_, index) => (
+                        <Cell key={index} fill={COLORS[index % COLORS.length]} />
+                      ))}
+                    </Pie>
+      
+                    {/* ICON */}
+                    <foreignObject
+                      x="50%"
+                      y="45%"
+                      width="40"
+                      height="40"
+                      transform="translate(-20,-20)"
+                    >
+                      <MapPinIcon size={22} className="mx-auto text-slate-700" />
+                    </foreignObject>
+      
+                    {/* TOTAL */}
+                    <text
+                      x="50%"
+                      y="62%"
+                      textAnchor="middle"
+                      dominantBaseline="middle"
+                      className="fill-slate-800 text-base sm:text-lg font-bold"
+                    >
+                      {total}
+                    </text>
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
 
-            {/* TOTAL */}
-            <text
-              x="50%"
-              y="60%"
-              textAnchor="middle"
-              dominantBaseline="middle"
-              className="text-lg font-bold fill-slate-800"
-            >
-              {total}
-            </text>
-          </PieChart>
-        </ResponsiveContainer>
-      </div>
-
-      {/* Legend */}
       <div className="mt-4 space-y-2">
         {data.map((d, i) => {
           const percent = total > 0 ? ((d.value / total) * 100).toFixed(0) : 0;

@@ -4,6 +4,7 @@ import ProgressBar from "./progress-bar";
 import Inout from "./inout";
 import Inout2 from "./Inout2";
 import ProvinceProgressChart from "./ProvinceProgressChart";
+import Heading from "./heading";
 
 interface GenderData {
   Quota: number;
@@ -141,7 +142,7 @@ export default function Branch() {
     { quota: 0, success: 0 },
   );
 
-    const grandTotalFemale = regions.reduce(
+  const grandTotalFemale = regions.reduce(
     (acc, region) => {
       AGE_COLUMNS.forEach((col) => {
         const values = region.ageGroups?.[col.key];
@@ -157,23 +158,26 @@ export default function Branch() {
 
   return (
     <div className="p-6 bg-white rounded-xl space-y-6">
-      <div className="flex gap-3 flex-wrap">
-        {REGION_KEYS.map((key) => (
-          <button
-            key={key}
-            onClick={() => handleRegionGroupChange(key)}
-            className={`px-4 py-2 rounded-lg border transition ${
-              selectedKey === key
-                ? "bg-blue-600 text-white"
-                : "bg-gray-100 hover:bg-gray-200"
-            }`}
-          >
-            {REGION_LABELS[key]}
-          </button>
-        ))}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 pt-4">
+        <Heading text="ความคืบหน้าการเก็บข้อมูล" color="#fe5000cc" />
+        <div className="flex flex-wrap gap-2">
+          {REGION_KEYS.map((key) => (
+            <button
+              key={key}
+              onClick={() => handleRegionGroupChange(key)}
+              className={`px-4 py-2 rounded-lg border transition ${
+                selectedKey === key
+                  ? "bg-[#fe5000] text-white"
+                  : "bg-white hover:bg-[#fe5000]/10"
+              }`}
+            >
+              {REGION_LABELS[key]}
+            </button>
+          ))}
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <ProgressBar
           heading="ภาพรวมการเก็บข้อมูล"
           value={total?.Success ?? 0}
@@ -191,10 +195,10 @@ export default function Branch() {
         />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 min-w-0">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 min-w-0">
+        <ProvinceProgressChart regions={regions} />
         <Inout region={selectedKey} />
         <Inout2 region={selectedKey} />
-        <ProvinceProgressChart regions={regions} />
       </div>
       <div className="overflow-x-auto">
         <p className="font-semibold text-blue-600 mb-2">รวม</p>
@@ -204,7 +208,7 @@ export default function Branch() {
               <th className="px-4 py-3 text-left border">จังหวัด</th>
               <th
                 colSpan={2}
-                className="px-4 py-3 text-center border bg-blue-50"
+                className="px-4 py-3 text-center border bg-[#533d32] text-white"
               >
                 รวมทั้งหมด
               </th>
@@ -213,23 +217,23 @@ export default function Branch() {
                 <th
                   key={col.key}
                   colSpan={2}
-                  className="px-4 py-3 text-center border"
+                  className="px-4 py-3 text-center border bg-[#533d32] text-white"
                 >
-                  {col.label}
+                  {col.label} ปี
                 </th>
               ))}
             </tr>
             <tr className="bg-gray-50">
               <th className="border"></th>
-              <th className="px-4 py-2 text-center border bg-blue-700 text-white">
+              <th className="px-4 py-2 text-center border bg-[#0c5ca4] text-white">
                 โควต้า
               </th>
-              <th className="px-4 py-2 text-center border bg-orange-500 text-white">
+              <th className="px-4 py-2 text-center border bg-[#fe5000] text-white">
                 สำเร็จ
               </th>
               {AGE_COLUMNS.map((col) => (
                 <React.Fragment key={col.key}>
-                  <th className="px-4 py-2 text-center border bg-blue-600 text-white">
+                  <th className="px-4 py-2 text-center border bg-[#0c5ca4] text-white">
                     โควต้า
                   </th>
                   <th className="px-4 py-2 text-center border bg-[#fe5000] text-white">
@@ -246,30 +250,29 @@ export default function Branch() {
               return (
                 <tr
                   key={region.name}
-                  className="border-b hover:bg-blue-50 transition"
+                  className="border-b hover:bg-[#0c5ca4]/10 transition"
                 >
                   <td className="px-4 py-3 font-medium border">
                     {region.name}
                   </td>
 
-                  <td className="px-4 py-3 text-center border font-bold text-blue-700 bg-blue-50">
+                  <td className="px-4 py-3 text-center border font-bold text-[#0c5ca4] bg-[#0c5ca4]/10">
                     {provinceTotal.quota}
                   </td>
-                  <td className="px-4 py-3 text-center border font-bold text-orange-600 bg-orange-50">
+                  <td className="px-4 py-3 text-center border font-bold text-[#fe5000] bg-[#fe5000]/10">
                     {provinceTotal.success}
                   </td>
 
-                  {/* ของเดิม */}
                   {AGE_COLUMNS.map((col) => {
                     const values = region.ageGroups?.[col.key];
 
                     return (
                       <React.Fragment key={col.key}>
-                        <td className="px-4 py-3 text-center border font-semibold text-blue-600">
+                        <td className="px-4 py-3 text-center border font-bold text-[#0c5ca4] bg-[#0c5ca4]/10">
                           {(values?.male?.Quota ?? 0) +
                             (values?.female?.Quota ?? 0)}
                         </td>
-                        <td className="px-4 py-3 text-center border bg-[#fe5000]/10 text-[#fe5000]">
+                        <td className="px-4 py-3 text-center border font-bold text-[#fe5000] bg-[#fe5000]/10">
                           {(values?.male?.Success ?? 0) +
                             (values?.female?.Success ?? 0)}
                         </td>
@@ -280,31 +283,34 @@ export default function Branch() {
               );
             })}
           </tbody>
-          <tr className="bg-blue-100 font-semibold">
-            <td className="px-4 py-3 border">รวมทั้งหมด</td>
-            <td className="px-4 py-3 text-center border text-blue-800 font-bold">
-              {grandTotal.quota}
-            </td>
-            <td className="px-4 py-3 text-center border text-orange-700 font-bold">
-              {grandTotal.success}
-            </td>
+          <tfoot>
+            <tr className="bg-blue-100 font-semibold">
+              <td className="px-4 py-3 border">รวมทั้งหมด</td>
+              <td className="px-4 py-3 text-center border text-blue-800 font-bold">
+                {grandTotal.quota}
+              </td>
+              <td className="px-4 py-3 text-center border text-[#fe5000] font-bold">
+                {grandTotal.success}
+              </td>
 
-            {AGE_COLUMNS.map((col) => {
-              const values = ageTotals?.[col.key];
+              {AGE_COLUMNS.map((col) => {
+                const values = ageTotals?.[col.key];
 
-              return (
-                <React.Fragment key={col.key}>
-                  <td className="px-4 py-3 text-center border text-blue-700">
-                    {(values?.male?.Quota ?? 0) + (values?.female?.Quota ?? 0)}
-                  </td>
-                  <td className="px-4 py-3 text-center border text-orange-600">
-                    {(values?.male?.Success ?? 0) +
-                      (values?.female?.Success ?? 0)}
-                  </td>
-                </React.Fragment>
-              );
-            })}
-          </tr>
+                return (
+                  <React.Fragment key={col.key}>
+                    <td className="px-4 py-3 text-center border text-blue-800 font-bold">
+                      {(values?.male?.Quota ?? 0) +
+                        (values?.female?.Quota ?? 0)}
+                    </td>
+                    <td className="px-4 py-3 text-center border text-[#fe5000] font-bold">
+                      {(values?.male?.Success ?? 0) +
+                        (values?.female?.Success ?? 0)}
+                    </td>
+                  </React.Fragment>
+                );
+              })}
+            </tr>
+          </tfoot>
         </table>
       </div>
       <div className="overflow-x-auto">
@@ -315,7 +321,7 @@ export default function Branch() {
               <th className="px-4 py-3 text-left border">จังหวัด</th>
               <th
                 colSpan={2}
-                className="px-4 py-3 text-center border bg-blue-50"
+                className="px-4 py-3 text-center border bg-[#533d32] text-white"
               >
                 รวมทั้งหมด
               </th>
@@ -324,26 +330,26 @@ export default function Branch() {
                 <th
                   key={col.key}
                   colSpan={2}
-                  className="px-4 py-3 text-center border"
+                  className="px-4 py-3 text-center border bg-[#533d32] text-white"
                 >
-                  {col.label}
+                  {col.label} ปี
                 </th>
               ))}
             </tr>
             <tr className="bg-gray-50">
               <th className="border"></th>
-              <th className="px-4 py-2 text-center border bg-blue-700 text-white">
+              <th className="px-4 py-2 text-center border bg-[#0c5ca4] text-white  font-bold">
                 โควต้า
               </th>
-              <th className="px-4 py-2 text-center border bg-orange-500 text-white">
+              <th className="px-4 py-2 text-center border bg-[#fe5000] text-white  font-bold">
                 สำเร็จ
               </th>
               {AGE_COLUMNS.map((col) => (
                 <React.Fragment key={col.key}>
-                  <th className="px-4 py-2 text-center border bg-blue-600 text-white">
+                  <th className="px-4 py-2 text-center border bg-[#0c5ca4] text-white  font-bold">
                     โควต้า
                   </th>
-                  <th className="px-4 py-2 text-center border bg-[#fe5000] text-white">
+                  <th className="px-4 py-2 text-center border bg-[#fe5000] text-white  font-bold">
                     สำเร็จ
                   </th>
                 </React.Fragment>
@@ -356,16 +362,16 @@ export default function Branch() {
               return (
                 <tr
                   key={region.name}
-                  className="border-b hover:bg-blue-50 transition"
+                  className="border-b hover:bg-[#0c5ca4]/10 transition"
                 >
                   <td className="px-4 py-3 font-medium border">
                     {region.name}
                   </td>
 
-                  <td className="px-4 py-3 text-center border font-bold text-blue-700 bg-blue-50">
+                  <td className="px-4 py-3 text-center border font-bold text-[#0c5ca4] bg-[#0c5ca4]/10  font-bold">
                     {provinceTotal.quota}
                   </td>
-                  <td className="px-4 py-3 text-center border font-bold text-orange-600 bg-orange-50">
+                  <td className="px-4 py-3 text-center border font-bold text-[#fe5000] bg-[#fe5000]/10  font-bold">
                     {provinceTotal.success}
                   </td>
 
@@ -374,10 +380,10 @@ export default function Branch() {
 
                     return (
                       <React.Fragment key={col.key}>
-                        <td className="px-4 py-3 text-center border font-semibold text-blue-600">
+                        <td className="px-4 py-3 text-center border font-bold text-[#0c5ca4] bg-[#0c5ca4]/10">
                           {values?.male?.Quota ?? 0}
                         </td>
-                        <td className="px-4 py-3 text-center border bg-[#fe5000]/10 text-[#fe5000]">
+                        <td className="px-4 py-3 text-center border bg-[#fe5000]/10 text-[#fe5000]  font-bold">
                           {values?.male?.Success ?? 0}
                         </td>
                       </React.Fragment>
@@ -387,12 +393,13 @@ export default function Branch() {
               );
             })}
           </tbody>
-          <tr className="bg-blue-100 font-semibold">
+          <tfoot>
+            <tr className="bg-blue-100 font-semibold">
             <td className="px-4 py-3 border">รวมทั้งหมด</td>
             <td className="px-4 py-3 text-center border text-blue-800 font-bold">
               {grandTotalMale.quota}
             </td>
-            <td className="px-4 py-3 text-center border text-orange-700 font-bold">
+            <td className="px-4 py-3 text-center border text-[#fe5000] font-bold">
               {grandTotalMale.success}
             </td>
 
@@ -400,16 +407,17 @@ export default function Branch() {
               const values = ageTotals?.[col.key];
               return (
                 <React.Fragment key={col.key}>
-                  <td className="px-4 py-3 text-center border text-blue-700">
+                  <td className="px-4 py-3 text-center border text-blue-800  font-bold">
                     {values?.male?.Quota ?? 0}
                   </td>
-                  <td className="px-4 py-3 text-center border text-orange-600">
+                  <td className="px-4 py-3 text-center border text-orange-600  font-bold">
                     {values?.male?.Success ?? 0}
                   </td>
                 </React.Fragment>
               );
             })}
           </tr>
+          </tfoot>
         </table>
       </div>
       <div className="overflow-x-auto">
@@ -420,7 +428,7 @@ export default function Branch() {
               <th className="px-4 py-3 text-left border">จังหวัด</th>
               <th
                 colSpan={2}
-                className="px-4 py-3 text-center border bg-blue-50"
+                className="px-4 py-3 text-center border bg-[#533d32] text-white"
               >
                 รวมทั้งหมด
               </th>
@@ -429,26 +437,26 @@ export default function Branch() {
                 <th
                   key={col.key}
                   colSpan={2}
-                  className="px-4 py-3 text-center border"
+                  className="px-4 py-3 text-center border bg-[#533d32] text-white"
                 >
-                  {col.label}
+                  {col.label} ปี
                 </th>
               ))}
             </tr>
             <tr className="bg-gray-50">
               <th className="border"></th>
-              <th className="px-4 py-2 text-center border bg-blue-700 text-white">
+              <th className="px-4 py-2 text-center border bg-[#0c5ca4] text-white  font-bold">
                 โควต้า
               </th>
-              <th className="px-4 py-2 text-center border bg-orange-500 text-white">
+              <th className="px-4 py-2 text-center border bg-[#fe5000] text-white  font-bold">
                 สำเร็จ
               </th>
               {AGE_COLUMNS.map((col) => (
                 <React.Fragment key={col.key}>
-                  <th className="px-4 py-2 text-center border bg-blue-600 text-white">
+                  <th className="px-4 py-2 text-center border bg-[#0c5ca4] text-white  font-bold">
                     โควต้า
                   </th>
-                  <th className="px-4 py-2 text-center border bg-[#fe5000] text-white">
+                  <th className="px-4 py-2 text-center border bg-[#fe5000] text-white  font-bold">
                     สำเร็จ
                   </th>
                 </React.Fragment>
@@ -467,10 +475,10 @@ export default function Branch() {
                     {region.name}
                   </td>
 
-                  <td className="px-4 py-3 text-center border font-bold text-blue-700 bg-blue-50">
+                  <td className="px-4 py-3 text-center border font-bold bg-[#0c5ca4]/10 text-[#0c5ca4]">
                     {provinceTotal.quota}
                   </td>
-                  <td className="px-4 py-3 text-center border font-bold text-orange-600 bg-orange-50">
+                  <td className="px-4 py-3 text-center border font-bold bg-[#fe5000]/10 text-[#fe5000]">
                     {provinceTotal.success}
                   </td>
 
@@ -479,10 +487,10 @@ export default function Branch() {
 
                     return (
                       <React.Fragment key={col.key}>
-                        <td className="px-4 py-3 text-center border font-semibold text-blue-600">
+                        <td className="px-4 py-3 text-center border font-bold bg-[#0c5ca4]/10 text-[#0c5ca4]">
                           {values?.female?.Quota ?? 0}
                         </td>
-                        <td className="px-4 py-3 text-center border bg-[#fe5000]/10 text-[#fe5000]">
+                        <td className="px-4 py-3 text-center border font-bold bg-[#fe5000]/10 text-[#fe5000]">
                           {values?.female?.Success ?? 0}
                         </td>
                       </React.Fragment>
@@ -492,12 +500,13 @@ export default function Branch() {
               );
             })}
           </tbody>
-          <tr className="bg-blue-100 font-semibold">
+         <tfoot>
+           <tr className="bg-blue-100 font-semibold">
             <td className="px-4 py-3 border">รวมทั้งหมด</td>
             <td className="px-4 py-3 text-center border text-blue-800 font-bold">
               {grandTotalFemale.quota}
             </td>
-            <td className="px-4 py-3 text-center border text-orange-700 font-bold">
+            <td className="px-4 py-3 text-center border text-[#fe5000] font-bold">
               {grandTotalFemale.success}
             </td>
 
@@ -506,16 +515,17 @@ export default function Branch() {
 
               return (
                 <React.Fragment key={col.key}>
-                  <td className="px-4 py-3 text-center border text-blue-700">
+                  <td className="px-4 py-3 text-center border text-blue-800  font-bold">
                     {values?.female?.Quota ?? 0}
                   </td>
-                  <td className="px-4 py-3 text-center border text-orange-600">
+                  <td className="px-4 py-3 text-center border text-[#fe5000]  font-bold">
                     {values?.female?.Success ?? 0}
                   </td>
                 </React.Fragment>
               );
             })}
           </tr>
+         </tfoot>
         </table>
       </div>
     </div>

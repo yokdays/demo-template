@@ -94,12 +94,17 @@ export default function AnalysisA() {
       score_weight: 0.991,
     },
   ];
+
+  const leftData = data1.slice(0, 10);
+  const rightData = data1.slice(10);
+  const allData = [...leftData, ...rightData];
+
   return (
     <>
       <h1
         className="
           inline-block
-          bg-blue-600
+          bg-[#533d32]
           text-white
           p-4
           mb-4
@@ -113,69 +118,77 @@ export default function AnalysisA() {
       </h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <Anabar
-          heading="ช่องสถานโทรทัศน์ที่นึกถึง (Top of Mind)"
-          heading2="สารคดีที่มีคุณภาพ"
-          labels={[
-            "มีเนื้อหาเข้าใจง่าย",
-            "เป็นความจริงถูกต้อง",
-            "ดูได้ทุกเพศทุกวัย",
-            "เพลิดเพลิน ไม่น่าเบื่อ",
-            "ได้เรียนรู้สิ่งใหม่",
-            "ภาษาเข้าใจง่าย",
-            "สนุก ไม่เครียด",
-            "เนื้อหาไม่รุนแรง",
-          ]}
-          datasets={[
-            {
-              key: "A",
-              label: "ไม่มีค่าถ่วงน้ำหนัก",
-              data: [61.564, 28.395, 7.42, 4.84, 9.14, 2.63, 6.32, 8.91],
-              color: "#3b82f6",
-            },
-            {
-              key: "B",
-              label: "มีค่าถ่วงน้ำหนัก",
-              data: [61.386, 28.395, 6.94, 5.27, 8.42, 3.12, 7.73, 4.64],
-              color: "#f97316",
-            },
-          ]}
-        />
-        <Anabar
-          heading="ช่องสถานโทรทัศน์ที่นึกถึง (Top of Mind)"
-          heading2="เนื้อหาบันเทิงที่สร้างสรรค์"
-          labels={[
-            "มีเนื้อหาเข้าใจง่าย",
-            "เป็นความจริงถูกต้อง",
-            "ดูได้ทุกเพศทุกวัย",
-            "เพลิดเพลิน ไม่น่าเบื่อ",
-            "ได้เรียนรู้สิ่งใหม่",
-            "ภาษาเข้าใจง่าย",
-            "สนุก ไม่เครียด",
-            "เนื้อหาไม่รุนแรง",
-          ]}
-          datasets={[
-            {
-              key: "A",
-              label: "ไม่มีค่าถ่วงน้ำหนัก",
-              data: [61.564, 28.395, 7.42, 4.84, 9.14, 2.63, 6.32, 8.91],
-              color: "#3b82f6",
-            },
-            {
-              key: "B",
-              label: "มีค่าถ่วงน้ำหนัก",
-              data: [61.386, 28.395, 6.94, 5.27, 8.42, 3.12, 7.73, 4.64],
-              color: "#f97316",
-            },
-          ]}
-        />
+        <div className="flex justify-center">
+          <div className="w-full max-w-2xl">
+            <Anabar
+              heading="ช่องสถานโทรทัศน์ที่นึกถึง (Top of Mind)"
+              heading2="สารคดีที่มีคุณภาพ"
+              labels={[
+                "มีเนื้อหาเข้าใจง่าย",
+                "เป็นความจริงถูกต้อง",
+                "ดูได้ทุกเพศทุกวัย",
+                "เพลิดเพลิน ไม่น่าเบื่อ",
+                "ได้เรียนรู้สิ่งใหม่",
+                "ภาษาเข้าใจง่าย",
+                "สนุก ไม่เครียด",
+                "เนื้อหาไม่รุนแรง",
+              ]}
+              datasets={[
+                // {
+                //   key: "A",
+                //   label: "ไม่มีค่าถ่วงน้ำหนัก",
+                //   data: [61.564, 28.395, 7.42, 4.84, 9.14, 2.63, 6.32, 8.91],
+                //   color: "#3b82f6",
+                // },
+                {
+                  key: "B",
+                  label: "มีค่าถ่วงน้ำหนัก",
+                  data: [61.386, 28.395, 6.94, 5.27, 8.42, 3.12, 7.73, 4.64],
+                  color: "#fe5000",
+                },
+              ]}
+            />
+          </div>
+        </div>
+        <div className="flex justify-center">
+          <div className="w-full max-w-2xl">
+            <Anabar
+              heading="ช่องสถานโทรทัศน์ที่นึกถึง (Top of Mind)"
+              heading2="เนื้อหาบันเทิงที่สร้างสรรค์"
+              labels={[
+                "มีเนื้อหาเข้าใจง่าย",
+                "เป็นความจริงถูกต้อง",
+                "ดูได้ทุกเพศทุกวัย",
+                "เพลิดเพลิน ไม่น่าเบื่อ",
+                "ได้เรียนรู้สิ่งใหม่",
+                "ภาษาเข้าใจง่าย",
+                "สนุก ไม่เครียด",
+                "เนื้อหาไม่รุนแรง",
+              ]}
+              datasets={[
+                // {
+                //   key: "A",
+                //   label: "ไม่มีค่าถ่วงน้ำหนัก",
+                //   data: [61.564, 28.395, 7.42, 4.84, 9.14, 2.63, 6.32, 8.91],
+                //   color: "#3b82f6",
+                // },
+                {
+                  key: "B",
+                  label: "มีค่าถ่วงน้ำหนัก",
+                  data: [61.386, 28.395, 6.94, 5.27, 8.42, 3.12, 7.73, 4.64],
+                  color: "#fe5000",
+                },
+              ]}
+            />
+          </div>
+        </div>
       </div>
 
       <div className="mb-4">
         <h1
           className="
           inline-block
-          bg-blue-600
+          bg-[#533d32]
           text-white
           p-4
           mb-4
@@ -192,44 +205,113 @@ export default function AnalysisA() {
           ประเด็นที่ 1
           หากต้องการรับชมเนื้อหาศิลปวัฒนธรรมไทยที่ถ่ายทอดให้เห็นถึงความสวยงามและช่วยยกระดับคุณค่าของความเป็นไทย
         </p>
-        <div className="w-full overflow-x-auto mt-4">
-          <table className="w-full border-collapse bg-white rounded-xl shadow">
-            <thead>
-              <tr className="bg-blue-600 text-white text-left">
-                <th className="px-4 py-3">
-                  ช่องสถานีโทรทัศน์ที่เลือกรับชมเนื้อหาศิลปวัฒนธรรมไทยเป็นอันดับแรก
-                </th>
-                <th className="px-4 py-3 text-center">จำนวน</th>
-                <th className="px-4 py-3 text-center">ไม่มีค่าถ่วงน้ำหนัก</th>
-                <th className="px-4 py-3 text-center">มีค่าถ่วงน้ำหนัก</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {data1.map((item) => (
-                <tr
-                  key={item.id}
-                  className="border-b hover:bg-gray-50 transition"
-                >
-                  <td className="px-4 py-3 font-medium">{item.name}</td>
-                  <td className="px-4 py-3 text-center">{item.total}</td>
-                  <td className="px-4 py-3 text-center">
-                    {item.score.toFixed(2)}
-                  </td>
-                  <td className="px-4 py-3 text-center">
-                    {item.score_weight.toFixed(2)}
-                  </td>
+        <div className="w-full mt-4">
+          <div className="block lg:hidden overflow-x-auto">
+            <table className="w-full border-collapse bg-white rounded-xl shadow">
+              <thead>
+                <tr className="bg-[#006941] text-white text-left">
+                  <th className="px-4 py-3">ช่องสถานีโทรทัศน์</th>
+                  <th className="px-4 py-3 text-center">จำนวน</th>
+                  <th className="px-4 py-3 text-center">ไม่มีค่าถ่วงน้ำหนัก</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {allData.map((item, index) => (
+                  <tr
+                    key={item.id}
+                    className="border-b hover:bg-gray-50 transition"
+                  >
+                    <td className="px-4 py-3 font-medium">
+                      <span className="font-bold text-[#006941] mr-2">
+                        {index + 1}.
+                      </span>
+                      {item.name}
+                    </td>
+                    <td className="px-4 py-3 text-center">{item.total}</td>
+                    <td className="px-4 py-3 text-center">
+                      {item.score.toFixed(2)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="hidden lg:grid grid-cols-2 gap-6">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse bg-white rounded-xl shadow">
+                <thead>
+                  <tr className="bg-[#006941] text-white text-left">
+                    <th className="px-4 py-3">ช่องสถานีโทรทัศน์</th>
+                    <th className="px-4 py-3 text-center">จำนวน</th>
+                    <th className="px-4 py-3 text-center">
+                      ไม่มีค่าถ่วงน้ำหนัก
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {leftData.map((item, index) => (
+                    <tr
+                      key={item.id}
+                      className="border-b hover:bg-gray-50 transition"
+                    >
+                      <td className="px-4 py-3 font-medium">
+                        <span className="font-bold text-[#006941] mr-2">
+                          {index + 1}.
+                        </span>
+                        {item.name}
+                      </td>
+                      <td className="px-4 py-3 text-center">{item.total}</td>
+                      <td className="px-4 py-3 text-center">
+                        {item.score.toFixed(2)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* RIGHT */}
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse bg-white rounded-xl shadow">
+                <thead>
+                  <tr className="bg-[#006941] text-white text-left">
+                    <th className="px-4 py-3">ช่องสถานีโทรทัศน์</th>
+                    <th className="px-4 py-3 text-center">จำนวน</th>
+                    <th className="px-4 py-3 text-center">
+                      ไม่มีค่าถ่วงน้ำหนัก
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {rightData.map((item, index) => (
+                    <tr
+                      key={item.id}
+                      className="border-b hover:bg-gray-50 transition"
+                    >
+                      <td className="px-4 py-3 font-medium">
+                        <span className="font-bold text-[#006941] mr-2">
+                          {index + leftData.length + 1}.
+                        </span>
+                        {item.name}
+                      </td>
+                      <td className="px-4 py-3 text-center">{item.total}</td>
+                      <td className="px-4 py-3 text-center">
+                        {item.score.toFixed(2)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
       <div className="mb-4">
         <h1
           className="
           inline-block
-          bg-blue-600
+          bg-[#533d32]
           text-white
           p-4
           mb-4
@@ -246,37 +328,106 @@ export default function AnalysisA() {
           ประเด็นที่ 2
           หากต้องการรับชมเนื้อหาศิลปวัฒนธรรมไทยที่ถ่ายทอดให้เห็นถึงความสวยงามและช่วยยกระดับคุณค่าของความเป็นไทย
         </p>
-        <div className="w-full overflow-x-auto mt-4">
-          <table className="w-full border-collapse bg-white rounded-xl shadow">
-            <thead>
-              <tr className="bg-blue-600 text-white text-left">
-                <th className="px-4 py-3">
-                  ช่องสถานีโทรทัศน์ที่เลือกรับชมเนื้อหาศิลปวัฒนธรรมไทยเป็นอันดับแรก
-                </th>
-                <th className="px-4 py-3 text-center">จำนวน</th>
-                <th className="px-4 py-3 text-center">ไม่มีค่าถ่วงน้ำหนัก</th>
-                <th className="px-4 py-3 text-center">มีค่าถ่วงน้ำหนัก</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {data1.map((item) => (
-                <tr
-                  key={item.id}
-                  className="border-b hover:bg-gray-50 transition"
-                >
-                  <td className="px-4 py-3 font-medium">{item.name}</td>
-                  <td className="px-4 py-3 text-center">{item.total}</td>
-                  <td className="px-4 py-3 text-center">
-                    {item.score.toFixed(2)}
-                  </td>
-                  <td className="px-4 py-3 text-center">
-                    {item.score_weight.toFixed(2)}
-                  </td>
+        <div className="w-full mt-4">
+          <div className="block lg:hidden overflow-x-auto">
+            <table className="w-full border-collapse bg-white rounded-xl shadow">
+              <thead>
+                <tr className="bg-[#006941] text-white text-left">
+                  <th className="px-4 py-3">ช่องสถานีโทรทัศน์</th>
+                  <th className="px-4 py-3 text-center">จำนวน</th>
+                  <th className="px-4 py-3 text-center">ไม่มีค่าถ่วงน้ำหนัก</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {allData.map((item, index) => (
+                  <tr
+                    key={item.id}
+                    className="border-b hover:bg-gray-50 transition"
+                  >
+                    <td className="px-4 py-3 font-medium">
+                      <span className="font-bold text-[#006941] mr-2">
+                        {index + 1}.
+                      </span>
+                      {item.name}
+                    </td>
+                    <td className="px-4 py-3 text-center">{item.total}</td>
+                    <td className="px-4 py-3 text-center">
+                      {item.score.toFixed(2)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="hidden lg:grid grid-cols-2 gap-6">
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse bg-white rounded-xl shadow">
+                <thead>
+                  <tr className="bg-[#006941] text-white text-left">
+                    <th className="px-4 py-3">ช่องสถานีโทรทัศน์</th>
+                    <th className="px-4 py-3 text-center">จำนวน</th>
+                    <th className="px-4 py-3 text-center">
+                      ไม่มีค่าถ่วงน้ำหนัก
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {leftData.map((item, index) => (
+                    <tr
+                      key={item.id}
+                      className="border-b hover:bg-gray-50 transition"
+                    >
+                      <td className="px-4 py-3 font-medium">
+                        <span className="font-bold text-[#006941] mr-2">
+                          {index + 1}.
+                        </span>
+                        {item.name}
+                      </td>
+                      <td className="px-4 py-3 text-center">{item.total}</td>
+                      <td className="px-4 py-3 text-center">
+                        {item.score.toFixed(2)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* RIGHT */}
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse bg-white rounded-xl shadow">
+                <thead>
+                  <tr className="bg-[#006941] text-white text-left">
+                    <th className="px-4 py-3">ช่องสถานีโทรทัศน์</th>
+                    <th className="px-4 py-3 text-center">จำนวน</th>
+                    <th className="px-4 py-3 text-center">
+                      ไม่มีค่าถ่วงน้ำหนัก
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {rightData.map((item, index) => (
+                    <tr
+                      key={item.id}
+                      className="border-b hover:bg-gray-50 transition"
+                    >
+                      <td className="px-4 py-3 font-medium">
+                        <span className="font-bold text-[#006941] mr-2">
+                          {index + leftData.length + 1}.
+                        </span>
+                        {item.name}
+                      </td>
+                      <td className="px-4 py-3 text-center">{item.total}</td>
+                      <td className="px-4 py-3 text-center">
+                        {item.score.toFixed(2)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </>

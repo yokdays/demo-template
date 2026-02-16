@@ -70,48 +70,57 @@ export default function Progress() {
 function SectionTable({ title, data }) {
   return (
     <div className="w-full">
-      {/* <div className="bg-[#533D32] text-white font-semibold px-4 py-4 text-xl rounded-t-xl">
-        {title}
-      </div> */}
-
-      <div className="overflow-x-auto rounded-b-xl border">
-        <table className="w-full min-w-[900px] text-sm border-collapse table-fixed">
+      <div className="overflow-x-auto rounded-xl border shadow-sm">
+        <table className="w-full table-fixed text-sm border-collapse">
+          
           <colgroup>
             <col className="w-[220px]" />
-            {AGE_COLUMNS.map((_, index) => (
-              <React.Fragment key={index}>
-                <col className="w-[90px]" />
-                <col className="w-[90px]" />
+            {AGE_COLUMNS.map((_, i) => (
+              <React.Fragment key={i}>
+                <col className="w-[140px]" />
+                <col className="w-[140px]" />
               </React.Fragment>
             ))}
           </colgroup>
 
-          <thead>
-            <tr className="bg-gray-100 text-gray-600">
-              <th rowSpan={2} className="px-4 py-3 text-left">
+          <thead className="text-xs md:text-sm">
+            <tr>
+              <th
+                rowSpan={2}
+                className="px-4 py-3 text-left font-semibold bg-gray-100 border-b"
+              >
                 {title}
               </th>
+
               {AGE_COLUMNS.map((col) => (
-                <th key={col.key} colSpan={2} className="px-4 py-3 text-center bg-[#533D32] text-white">
+                <th
+                  key={col.key}
+                  colSpan={2}
+                  className="px-4 py-3 text-center bg-[#533D32] text-white"
+                >
                   {col.label}
                 </th>
               ))}
             </tr>
 
-            <tr className="bg-gray-50 text-gray-500">
+            <tr>
               {AGE_COLUMNS.map((col) => (
                 <React.Fragment key={col.key}>
-                  <th className="px-4 py-2 text-center bg-[#b43900] text-white">โควต้า</th>
-                  <th className="px-4 py-2 text-center bg-[#fe5000] text-white">สำเร็จ</th>
+                  <th className="px-3 py-2 text-center bg-[#0c5ca4] text-white">
+                    โควต้า
+                  </th>
+                  <th className="px-3 py-2 text-center bg-[#fe5000] text-white">
+                    สำเร็จ
+                  </th>
                 </React.Fragment>
               ))}
             </tr>
           </thead>
 
-          <tbody>
-            {data.map((group : any) => (
-              <tr key={group.name} className="border-b hover:bg-[#2563EB]/10">
-                <td className="px-4 py-3 font-medium whitespace-nowrap border border-l">
+          <tbody className="divide-y">
+            {data.map((group: any) => (
+              <tr key={group.name} className="hover:bg-[#0c5ca4]/5 transition border-collapse">
+                <td className="px-4 py-3 font-medium truncate border border-r">
                   {group.name}
                 </td>
 
@@ -119,10 +128,10 @@ function SectionTable({ title, data }) {
                   const values = group.ageGroups[col.key];
                   return (
                     <React.Fragment key={col.key}>
-                      <td className="px-4 py-3 text-center text-[#b43900] font-semibold tabular-nums ">
+                      <td className="px-3 py-3 text-center text-[#0c5ca4] font-semibold tabular-nums">
                         {values?.Quota ?? 0}
                       </td>
-                      <td className="px-4 py-3 text-center text-[#fe5000] bg-[#fe5000]/10 font-semibold tabular-nums">
+                      <td className="px-3 py-3 text-center text-[#fe5000] bg-[#fe5000]/10 font-semibold tabular-nums">
                         {values?.Success ?? 0}
                       </td>
                     </React.Fragment>
@@ -136,3 +145,5 @@ function SectionTable({ title, data }) {
     </div>
   );
 }
+
+

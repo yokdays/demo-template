@@ -55,28 +55,26 @@ export default function App() {
   return (
     <div className="relative min-h-screen">
       <div className="fixed inset-0 pointer-events-none">
-        {/* ภาพ Background */}
         <div
           className="
-      absolute inset-0
-      bg-cover bg-center
-      filter brightness-110 blur-sm
-      transform scale-105
-    "
+            absolute inset-0
+            bg-cover bg-center
+            filter brightness-110
+            transform scale-105
+          "
           style={{
             backgroundImage: `url(${bg})`,
           }}
         />
 
-        {/* Gradient overlay */}
         <div
           className="
-      absolute inset-0
-      bg-gradient-to-b
-      from-transparent
-      via-black/20
-      to-black/60
-    "
+            absolute inset-0
+            bg-gradient-to-b
+            from-transparent
+            via-orange/120
+            to-black/20
+          "
         />
       </div>
 
@@ -91,7 +89,7 @@ export default function App() {
               token ? (
                 <Navigate to="/dashboard" replace />
               ) : (
-                <Login setToken={setToken} />
+                <Login setToken={setToken} setUser={setUser} /> // 👈 เพิ่ม setUser
               )
             }
           />
