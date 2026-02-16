@@ -43,10 +43,7 @@ export default function AnalysisBranch() {
       </div>
 
       <div>
-        {active === "A" && (
-          <AnalysisA
-          />
-        )}
+        {active === "A" && <AnalysisA />}
         {active === "B" && <AnalysisB />}
         {active === "C" && <AnalysisC />}
       </div>

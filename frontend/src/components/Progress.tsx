@@ -70,9 +70,9 @@ export default function Progress() {
 function SectionTable({ title, data }) {
   return (
     <div className="w-full">
-      <div className="bg-[#533D32] text-white font-semibold px-4 py-4 text-xl rounded-t-xl">
+      {/* <div className="bg-[#533D32] text-white font-semibold px-4 py-4 text-xl rounded-t-xl">
         {title}
-      </div>
+      </div> */}
 
       <div className="overflow-x-auto rounded-b-xl border">
         <table className="w-full min-w-[900px] text-sm border-collapse table-fixed">
@@ -89,7 +89,7 @@ function SectionTable({ title, data }) {
           <thead>
             <tr className="bg-gray-100 text-gray-600">
               <th rowSpan={2} className="px-4 py-3 text-left">
-                {/* {title} */}
+                {title}
               </th>
               {AGE_COLUMNS.map((col) => (
                 <th key={col.key} colSpan={2} className="px-4 py-3 text-center bg-[#533D32] text-white">
@@ -101,7 +101,7 @@ function SectionTable({ title, data }) {
             <tr className="bg-gray-50 text-gray-500">
               {AGE_COLUMNS.map((col) => (
                 <React.Fragment key={col.key}>
-                  <th className="px-4 py-2 text-center bg-[#2563EB] text-white">โควต้า</th>
+                  <th className="px-4 py-2 text-center bg-[#b43900] text-white">โควต้า</th>
                   <th className="px-4 py-2 text-center bg-[#fe5000] text-white">สำเร็จ</th>
                 </React.Fragment>
               ))}
@@ -119,7 +119,7 @@ function SectionTable({ title, data }) {
                   const values = group.ageGroups[col.key];
                   return (
                     <React.Fragment key={col.key}>
-                      <td className="px-4 py-3 text-center text-[#2563EB] font-semibold tabular-nums ">
+                      <td className="px-4 py-3 text-center text-[#b43900] font-semibold tabular-nums ">
                         {values?.Quota ?? 0}
                       </td>
                       <td className="px-4 py-3 text-center text-[#fe5000] bg-[#fe5000]/10 font-semibold tabular-nums">

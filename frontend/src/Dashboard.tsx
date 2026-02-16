@@ -30,8 +30,8 @@ export default function App() {
             />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 min-w-0">
-            <Inout inArea={1861} outArea={1085} />
-            <Inout2 inArea={1541} outArea={1405} />
+            <Inout inArea={1861} outArea={1075} />
+            <Inout2 inArea={1531} outArea={1405} />
             <AgeProgressChart
               data={[
                 { age: "รวมทั้งหมด", Quota: 5010, Success: 2936 },

@@ -66,7 +66,7 @@ export default function Login({ setToken }: LoginProps) {
             />
           </div>
           <h1 className="text-xl font-bold text-center p-4 max-w-[420px]">
-            โครงการติดตามความคืบหน้าของแบบสำรวจความพึงพอใจและความไม่พึงพอใจของลูกค้า
+            โครงการเก็บรวบรวมข้อมูลเชิงปริมาณเพื่อประเมินการรับรู้และการยอมรับของสังคมต่อบทบาทสื่อสาธารณะของ ส.ส.ท.
           </h1>
 
           <h1 className="text-md font-bold text-center">เข้าสู่ระบบ</h1>
