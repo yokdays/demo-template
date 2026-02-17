@@ -7,17 +7,23 @@ import Navbar from "./components/Navbar";
 import bg from "../src/images/bg.png";
 import axios from "axios";
 import Menubar from "./components/menubar";
+import Analysis from "./Analysis";
 
 export default function App() {
-  const [token, setToken] = useState<string | null>(null);
+  const [token, setToken] = useState<string | null>(
+    localStorage.getItem("token"),
+  );
+
+  const [user, setUser] = useState<any>(() => {
+    const stored = localStorage.getItem("user");
+    return stored ? JSON.parse(stored) : null;
+  });
+
   const [loading, setLoading] = useState(true);
-  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
-    const initAuth = async () => {
-      const storedToken = localStorage.getItem("token");
-
-      if (!storedToken) {
+    const validateToken = async () => {
+      if (!token) {
         setLoading(false);
         return;
       }
@@ -25,23 +31,25 @@ export default function App() {
       try {
         const response = await axios.get("/api/profile", {
           headers: {
-            Authorization: `Bearer ${storedToken}`,
+            Authorization: `Bearer ${token}`,
           },
         });
 
         setUser(response.data.user);
-        setToken(storedToken);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
       } catch (error) {
         console.error("Token invalid:", error);
         localStorage.removeItem("token");
+        localStorage.removeItem("user");
         setToken(null);
+        setUser(null);
       }
 
       setLoading(false);
     };
 
-    initAuth();
-  }, []);
+    validateToken();
+  }, [token]);
 
   if (loading) {
     return (
@@ -53,17 +61,34 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen">
-      <div
-        className="fixed inset-0 bg-cover bg-center brightness-125"
-        style={{
-          backgroundImage: `url(${bg})`,
-        }}
-      />
+      <div className="fixed inset-0 pointer-events-none">
+        <div
+          className="
+            absolute inset-0
+            bg-cover bg-center
+            filter brightness-110
+            transform scale-105
+          "
+          style={{
+            backgroundImage: `url(${bg})`,
+          }}
+        />
+
+        <div
+          className="
+            absolute inset-0
+            bg-gradient-to-b
+            from-transparent
+            via-orange/120
+            to-black/20
+          "
+        />
+      </div>
 
       <div className="relative z-10 min-h-screen">
         {token && <Navbar user={user} setToken={setToken} />}
         {token && <Menubar setToken={setToken} />}
-        
+
         <Routes>
           <Route
             path="/login"
@@ -71,7 +96,7 @@ export default function App() {
               token ? (
                 <Navigate to="/dashboard" replace />
               ) : (
-                <Login setToken={setToken} />
+                <Login setToken={setToken} setUser={setUser} /> // 👈 เพิ่ม setUser
               )
             }
           />
@@ -82,6 +107,10 @@ export default function App() {
           <Route
             path="/branch"
             element={token ? <Province /> : <Navigate to="/login" replace />}
+          />
+          <Route
+            path="/analysis"
+            element={token ? <Analysis /> : <Navigate to="/login" replace />}
           />
           <Route path="*" element={<Navigate to="/dashboard" replace />} />
         </Routes>

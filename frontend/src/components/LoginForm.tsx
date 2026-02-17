@@ -1,8 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import thaipbs from "../images/thaipbs.png";
-import casia from "../images/c-asia.png";
+import thaipbscustom from "../images/thaipbs_custom.png";
 import ModernInput from "./input";
 
 interface LoginProps {
@@ -30,14 +29,11 @@ export default function Login({ setToken }: LoginProps) {
 
       const { token, user } = res.data;
 
-      // เก็บ token + user
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
 
-      // update auth state
       setToken(token);
 
-      // redirect แบบ React (ไม่ reload)
       navigate("/dashboard", { replace: true });
     } catch (err: any) {
       setError(err.response?.data?.message || "Login failed");
@@ -53,20 +49,15 @@ export default function Login({ setToken }: LoginProps) {
           onSubmit={handleLogin}
           className="bg-white p-6 rounded-xl shadow-md max-w-* space-y-4"
         >
-          <div className="flex items-center justify-center gap-4">
+          <div className="flex items-center justify-center gap-4 flex-wrap">
             <img
-              src={thaipbs}
-              alt="PTT"
-              className="h-12 sm:h-14 md:h-16 object-contain"
-            />
-            <img
-              src={casia}
-              alt="Custom Asia"
-              className="h-14 sm:h-16 md:h-18 object-contain mt-6"
+              src={thaipbscustom}
+              alt="thaipbs"
+              className="w-[400px] object-contain"
             />
           </div>
-          <h1 className="text-xl font-bold text-center p-4 max-w-[420px]">
-            โครงการติดตามความคืบหน้าของแบบสำรวจความพึงพอใจและความไม่พึงพอใจของลูกค้า
+          <h1 className="text-xl font-bold text-center p-4 min-w-xl max-w-3xl">
+            โครงการเก็บรวบรวมข้อมูลเชิงปริมาณเพื่อประเมินการรับรู้และการยอมรับของสังคมต่อบทบาทสื่อสาธารณะของ ส.ส.ท.
           </h1>
 
           <h1 className="text-md font-bold text-center">เข้าสู่ระบบ</h1>

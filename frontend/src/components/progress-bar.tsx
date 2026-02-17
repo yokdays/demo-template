@@ -18,7 +18,7 @@ export default function ProgressBar({ heading, value, total }: Props) {
               </span>
             )}
             <br />
-            <span className="text-3xl text-[#cf5612]">{value}</span> / <span className="text-sm text-[#2582c6]">{total}</span>
+            <span className="text-3xl text-[#fe5000]">{value}</span> / <span className="text-sm text-[#5189BC]">{total}</span>
           </span>
         </div>
         <span className="text-sm font-bold text-slate-800 text-end">
@@ -28,7 +28,7 @@ export default function ProgressBar({ heading, value, total }: Props) {
 
       <div className="w-full h-4 bg-slate-200 rounded-full overflow-hidden">
         <div
-          className="h-full bg-blue-500 rounded-full transition-all duration-700 ease-out"
+          className="h-full bg-[#fe5000] rounded-full transition-all duration-700 ease-out"
           style={{ width: `${percent}%` }}
         />
       </div>

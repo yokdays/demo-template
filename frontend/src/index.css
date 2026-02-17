@@ -9,3 +9,8 @@
     font-family: "Sarabun", "TH Sarabun New", system-ui, sans-serif;
   }
 }
+
+@keyframes slide {
+  from { width: 0 }
+  to { width: 100% }
+}

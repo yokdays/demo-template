@@ -1,26 +1,39 @@
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { Menu, X, LayoutDashboard, Users, Settings } from "lucide-react";
+import { Menu, X, LayoutDashboard, Users } from "lucide-react";
 
 export default function Menubar() {
   const [open, setOpen] = useState(false);
 
-  const linkStyle = "flex items-center gap-2 px-3 py-2 rounded-lg transition";
+  const baseStyle =
+    "relative flex items-center gap-2 px-3 py-2 text-sm font-medium transition-colors duration-300";
 
-  const activeStyle = "text-black border-b-2 border-[#fe5000] bg-[#fff5f0]";
+  const activeStyle =
+    "text-[#fe5000] after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-full after:bg-[#fe5000] after:origin-left after:scale-x-100 after:transition-transform after:duration-300";
 
-  const inactiveStyle = "text-slate-600 hover:bg-slate-100 hover:text-blue-600";
+  const inactiveStyle =
+    "text-slate-700 hover:text-[#fe5000] after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-full after:bg-[#fe5000] after:origin-left after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300";
 
   return (
-    <nav className="bg-white shadow border-b">
+    <nav
+      className="
+        sticky top-0 z-50
+        backdrop-blur-xl
+        bg-white/60
+        border-b border-white/30
+        shadow-[0_4px_20px_rgba(0,0,0,0.05)]
+      "
+    >
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          <div className="hidden md:flex items-center gap-4">
+
+          {/* Desktop Menu */}
+          <div className="hidden md:flex items-center gap-6">
             <NavLink
               to="/dashboard"
               end
               className={({ isActive }) =>
-                `${linkStyle} ${isActive ? activeStyle : inactiveStyle}`
+                `${baseStyle} ${isActive ? activeStyle : inactiveStyle}`
               }
             >
               <LayoutDashboard size={18} />
@@ -30,16 +43,17 @@ export default function Menubar() {
             <NavLink
               to="/branch"
               className={({ isActive }) =>
-                `${linkStyle} ${isActive ? activeStyle : inactiveStyle}`
+                `${baseStyle} ${isActive ? activeStyle : inactiveStyle}`
               }
             >
               <Users size={18} />
               ข้อมูลเชิงลึก
             </NavLink>
+
             <NavLink
               to="/analysis"
               className={({ isActive }) =>
-                `${linkStyle} ${isActive ? activeStyle : inactiveStyle}`
+                `${baseStyle} ${isActive ? activeStyle : inactiveStyle}`
               }
             >
               <Users size={18} />
@@ -47,51 +61,61 @@ export default function Menubar() {
             </NavLink>
           </div>
 
-          {/* Mobile Button */}
-          <button onClick={() => setOpen(!open)} className="md:hidden">
+          {/* Mobile Toggle */}
+          <button
+            onClick={() => setOpen(!open)}
+            className="md:hidden text-slate-700"
+          >
             {open ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Dropdown */}
       {open && (
-        <div className="md:hidden border-t bg-white p-4 space-y-2">
+        <div className="md:hidden border-t border-white/30 bg-white/70 backdrop-blur-xl p-4 space-y-2">
           <NavLink
-            to="/"
+            to="/dashboard"
             end
             onClick={() => setOpen(false)}
             className={({ isActive }) =>
-              `${linkStyle} ${isActive ? activeStyle : inactiveStyle}`
+              `${baseStyle} ${
+                isActive ? "text-[#fe5000] font-semibold" : "text-slate-700"
+              }`
             }
           >
             <LayoutDashboard size={18} />
-            Dashboard
+            ภาพรวมผลการสำรวจ
           </NavLink>
 
           <NavLink
-            to="/users"
+            to="/branch"
             onClick={() => setOpen(false)}
             className={({ isActive }) =>
-              `${linkStyle} ${isActive ? activeStyle : inactiveStyle}`
+              `${baseStyle} ${
+                isActive ? "text-[#fe5000] font-semibold" : "text-slate-700"
+              }`
             }
           >
             <Users size={18} />
-            Users
+            ข้อมูลเชิงลึก
           </NavLink>
 
           <NavLink
-            to="/settings"
+            to="/analysis"
             onClick={() => setOpen(false)}
             className={({ isActive }) =>
-              `${linkStyle} ${isActive ? activeStyle : inactiveStyle}`
+              `${baseStyle} ${
+                isActive ? "text-[#fe5000] font-semibold" : "text-slate-700"
+              }`
             }
           >
-            <Settings size={18} />
-            Settings
+            <Users size={18} />
+            ผลการวิเคราะห์
           </NavLink>
         </div>
       )}
     </nav>
   );
 }
+

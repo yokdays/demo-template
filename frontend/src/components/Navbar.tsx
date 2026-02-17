@@ -1,61 +1,85 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import ptt from "/src/images/thaipbs.png";
-import casia from "/src/images/c-asia.png";
+import casia from "../images/c-asia.png";
 
-export default function Navbar({ user }) {
-  console.log("Navbar user:", user);
+interface User {
+  id: number;
+  name: string;
+  email?: string;
+}
+
+interface NavbarProps {
+  user: User | null;
+  setToken: Dispatch<SetStateAction<string | null>>;
+}
+
+export default function Navbar({ user, setToken }: NavbarProps) {
   return (
     <nav
       className="
-        w-full h-14 px-6
+        w-full h-16 px-8
         flex items-center justify-between
 
         bg-gradient-to-r
         from-white
-        via-[#fddfcc]/90
+        via-[#fff4ec]
         to-[#fe5000]
 
-        text-white
         backdrop-blur-md
-        border-b border-white/20
-        shadow-md
+        border-b border-[#fe5000]/20
+        shadow-sm
       "
     >
-      <div className="flex items-center gap-3">
-        <a href="/dashboard">
-          <div className="flex items-center justify-center w-16 h-16 ml-10 text-white rounded gap-2 hover:cursor-pointer">
-            <img
-              src={ptt}
-              alt="icon"
-              className="w-full h-full object-contain"
-            />
-            <img
-              src={casia}
-              alt="icon"
-              className="w-full h-full object-contain mt-2"
-            />
-          </div>
-        </a>
-
-        {/* <span className="text-lg font-semibold text-gray-800">
-          Demo Dashboard
-        </span> */}
-      </div>
+      <a href="/dashboard" className="flex items-center gap-3 group">
+        <div className="flex items-center gap-3 hover:scale-[1.02] transition">
+          <img
+            src={ptt}
+            alt="ThaiPBS"
+            className="w-20 object-contain"
+          />
+          <img
+            src={casia}
+            alt="C-Asia"
+            className="w-20 object-contain mt-4"
+          />
+        </div>
+      </a>
 
       <div className="flex items-center gap-6">
-        <div className="flex items-center gap-2 pl-4 border-l">
-          <div className="flex items-center justify-center w-8 h-8 text-sm font-semibold text-white bg-gray-400 rounded-full">
+        <div className="flex items-center gap-3 pl-6 border-l border-white">
+          <div className="
+              flex items-center justify-center
+              w-9 h-9
+              text-sm font-semibold
+              text-white
+              bg-gradient-to-br from-[#fe5000] to-[#b43900]
+              rounded-full
+              shadow-md
+            ">
             {user?.name?.charAt(0)?.toUpperCase() || "?"}
           </div>
           {user && (
-            <div className="flex items-center gap-3">
-              <span className="font-medium ml-1">{user.name}</span>
+            <div className="flex items-center gap-4">
+              <span className="text-sm font-medium text-white ">
+                {user.name}
+              </span>
+
               <button
-                className="text-sm text-white hover:underline"
+                className="
+                  px-3 py-1.5
+                  text-sm font-medium
+                  text-white
+                  border border-[#fe5000]/40
+                  rounded-md
+                  hover:bg-[#fe5000]
+                  hover:text-white
+                  transition-all
+                  duration-200
+                "
                 onClick={() => {
                   localStorage.removeItem("token");
                   localStorage.removeItem("user");
-                  window.location.replace("/login");
+                  setToken(null);
                 }}
               >
                 ออกจากระบบ
