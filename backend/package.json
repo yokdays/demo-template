@@ -1,20 +1,31 @@
 {
   "name": "backend",
   "version": "1.0.0",
+  "description": "Node.js Backend with Express 5 and SQL Server",
   "type": "module",
+  "main": "src/server.js",
   "scripts": {
-    "dev": "nodemon index.js",
-    "start": "node index.js"
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [
+    "express",
+    "mssql",
+    "api"
+  ],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "bcryptjs": "^3.0.3",
-    "cors": "^2.8.6",
-    "dotenv": "^17.3.1",
-    "express": "^5.2.1",
-    "jsonwebtoken": "^9.0.3",
-    "mssql": "^12.2.0"
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^5.0.0",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "mssql": "^11.0.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.11"
+    "nodemon": "^3.1.7"
   }
 }

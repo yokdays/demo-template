@@ -1,17 +1,21 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+
 import Dashboard from "./Dashboard";
 import Login from "./components/LoginForm";
 import Province from "./Province";
 import Navbar from "./components/Navbar";
-import bg from "../src/images/bg.png";
-import axios from "axios";
 import Menubar from "./components/menubar";
 import Analysis from "./Analysis";
 
+import bg from "../src/images/bg.png";
+import api from "./api/api";
+
+api.get("/profile")
+
 export default function App() {
-  const [token, setToken] = useState<string | null>(
-    localStorage.getItem("token"),
+  const [token, setToken] = useState<string | null>(() =>
+    localStorage.getItem("token")
   );
 
   const [user, setUser] = useState<any>(() => {
@@ -21,36 +25,46 @@ export default function App() {
 
   const [loading, setLoading] = useState(true);
 
+  // ✅ validate token แบบปลอดภัย
   useEffect(() => {
+    let mounted = true;
+
     const validateToken = async () => {
       if (!token) {
-        setLoading(false);
+        if (mounted) setLoading(false);
         return;
       }
 
       try {
-        const response = await axios.get("/api/profile", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await api.get("/profile");
 
-        setUser(response.data.user);
-        localStorage.setItem("user", JSON.stringify(response.data.user));
-      } catch (error) {
-        console.error("Token invalid:", error);
+        if (!mounted) return;
+
+        setUser(res.data.user);
+        localStorage.setItem("user", JSON.stringify(res.data.user));
+      } catch (err) {
+        console.error("Token invalid:", err);
+
         localStorage.removeItem("token");
         localStorage.removeItem("user");
-        setToken(null);
-        setUser(null);
-      }
 
-      setLoading(false);
+        if (mounted) {
+          setToken(null);
+          setUser(null);
+        }
+      } finally {
+        if (mounted) setLoading(false);
+      }
     };
 
     validateToken();
+
+    return () => {
+      mounted = false;
+    };
   }, [token]);
 
+  // ⏳ loading state
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -61,28 +75,13 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen">
+      {/* background */}
       <div className="fixed inset-0 pointer-events-none">
         <div
-          className="
-            absolute inset-0
-            bg-cover bg-center
-            filter brightness-110
-            transform scale-105
-          "
-          style={{
-            backgroundImage: `url(${bg})`,
-          }}
+          className="absolute inset-0 bg-cover bg-center filter brightness-110 transform scale-105"
+          style={{ backgroundImage: `url(${bg})` }}
         />
-
-        <div
-          className="
-            absolute inset-0
-            bg-gradient-to-b
-            from-transparent
-            via-orange/120
-            to-black/20
-          "
-        />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-orange/120 to-black/20" />
       </div>
 
       <div className="relative z-10 min-h-screen">
@@ -90,16 +89,19 @@ export default function App() {
         {token && <Menubar setToken={setToken} />}
 
         <Routes>
+          {/* LOGIN */}
           <Route
             path="/login"
             element={
               token ? (
                 <Navigate to="/dashboard" replace />
               ) : (
-                <Login setToken={setToken} setUser={setUser} /> // 👈 เพิ่ม setUser
+                <Login setToken={setToken} setUser={setUser} />
               )
             }
           />
+
+          {/* PROTECTED ROUTES */}
           <Route
             path="/dashboard"
             element={token ? <Dashboard /> : <Navigate to="/login" replace />}
@@ -112,7 +114,12 @@ export default function App() {
             path="/analysis"
             element={token ? <Analysis /> : <Navigate to="/login" replace />}
           />
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+
+          {/* FALLBACK */}
+          <Route
+            path="*"
+            element={<Navigate to={token ? "/dashboard" : "/login"} replace />}
+          />
         </Routes>
       </div>
     </div>

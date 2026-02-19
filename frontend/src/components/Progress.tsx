@@ -34,18 +34,34 @@ export default function Progress() {
   const [data, setData] = useState<ProgressResponse | null>(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetch("/api/progress")
-      .then((res) => res.json())
-      .then((resData) => {
-        setData(resData);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Error fetching progress:", err);
-        setLoading(false);
+useEffect(() => {
+  const fetchProgress = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const res = await fetch("/api/progress?year=2025", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
-  }, []);
+
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`);
+      }
+
+      const resData = await res.json();
+      setData(resData);
+    } catch (err) {
+      console.error("Error fetching progress:", err);
+      setData(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchProgress();
+}, []);
+
 
   if (loading) return <div className="p-4">Loading...</div>;
   if (!data) return <div className="p-4">No data</div>;

@@ -73,6 +73,8 @@ export default function Branch() {
       .finally(() => setLoading(false));
   }, []);
 
+  console.log(apiData)
+
   const regions: Region[] = apiData?.[selectedKey] ?? [];
   const ageTotals = calculateAgeTotals(regions);
   const total = regions.reduce(
