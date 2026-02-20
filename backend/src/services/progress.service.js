@@ -26,22 +26,25 @@ export async function buildProgressResponse(year) {
     .input('year', year)
     .query(`
       SELECT
-        p.region_code,
-        p.province_name,
-        s.age_range_id,
-        s.gender_id,
-        SUM(s.quota)   AS quota,
-        SUM(s.success) AS success
-      FROM survey_statistics s
-      JOIN provinces p ON p.province_id = s.province_id
+        p.[province_id],
+            p.province_name_th,
+            s.age_range_id,
+            s.gender_id,
+            SUM(s.quota)   AS total_quota,
+            SUM(s.success) AS total_success
+      FROM [UAT].[dbo].[survey_statistics] AS s
+        INNER JOIN [UAT].[dbo].[provinces] AS p ON s.province_id = p.province_id
       WHERE s.report_year = @year
-      GROUP BY
-        p.region_code,
-        p.province_name,
-        s.age_range_id,
-        s.gender_id
-      ORDER BY p.region_code, p.province_name
-    `);
+      GROUP BY 
+          p.[province_id],
+          p.province_name_th, 
+          s.age_range_id, 
+          s.gender_id
+      ORDER BY 
+          p.[province_id] ASC, 
+          p.province_name_th ASC, 
+          s.age_range_id ASC;
+      `);
 
   return transform(result.recordset);
 }
