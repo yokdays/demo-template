@@ -1,4 +1,4 @@
-import { getPool } from '../config/db.js';
+import { getPool } from '../config/database.js';
 
 /**
  * Map age_range_id → label
