@@ -2,21 +2,22 @@ import sql from 'mssql';
 import env from '../config/env.js'; 
 
 const config = {
-    // ต้องระบุ property 'server' และต้องเป็น string
-    server: env.DB_SERVER || 'localhost', // มั่นใจว่า env.DB_SERVER มีค่าเป็น string
+    server: env.DB_SERVER, // หรือ env.DB_SERVER
     authentication: {
         type: 'default',
         options: {
-            userName: env.DB_USER, // ตรวจสอบว่าใน env.js มี export ค่านี้ไหม
+            userName: env.DB_USER,
             password: env.DB_PASSWORD,
         }
     },
     options: {
-        database: env.DB_NAME,
-        encrypt: true, // สำหรับ Azure หรือ SQL Server รุ่นใหม่ๆ
-        trustServerCertificate: true // สำคัญมาก! ถ้าใช้ในเครื่องตัวเอง (Local)
+        encrypt: false, 
+        trustServerCertificate: true, // ต้องเป็น true เสมอถ้าต่อ IP ภายใน
+        cryptoCredentialsDetails: {
+            minVersion: 'TLSv1' // บังคับให้ใช้ TLS รุ่นเก่า
+        }
     },
-    port: parseInt(env.DB_PORT) || 1433 // พอร์ตต้องเป็น number
+    port: 1433
 };
 
 let pool;
