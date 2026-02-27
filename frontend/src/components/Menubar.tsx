@@ -9,17 +9,17 @@ export default function Menubar() {
     "relative flex items-center gap-2 px-3 py-2 text-sm font-medium transition-colors duration-300";
 
   const activeStyle =
-    "text-[#fe5000] after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-full after:bg-[#fe5000] after:origin-left after:scale-x-100 after:transition-transform after:duration-300";
+    "text-[#144194] after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-full after:bg-[#ffcc00] after:origin-left after:scale-x-100 after:transition-transform after:duration-300";
 
   const inactiveStyle =
-    "text-slate-700 hover:text-[#fe5000] after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-full after:bg-[#fe5000] after:origin-left after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300";
+    "text-slate-700 hover:text-[#144194] after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-full after:bg-[#fe5000] after:origin-left after:scale-x-0 hover:after:scale-x-100 after:transition-transform after:duration-300";
 
   return (
     <nav
       className="
         sticky top-0 z-50
         backdrop-blur-xl
-        bg-white/60
+        bg-white/40
         border-b border-white/30
         shadow-[0_4px_20px_rgba(0,0,0,0.05)]
       "
@@ -27,7 +27,6 @@ export default function Menubar() {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
 
-          {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-6">
             <NavLink
               to="/dashboard"
@@ -80,7 +79,7 @@ export default function Menubar() {
             onClick={() => setOpen(false)}
             className={({ isActive }) =>
               `${baseStyle} ${
-                isActive ? "text-[#fe5000] font-semibold" : "text-slate-700"
+                isActive ? "text-[#144194] font-semibold" : "text-slate-700"
               }`
             }
           >
@@ -93,7 +92,7 @@ export default function Menubar() {
             onClick={() => setOpen(false)}
             className={({ isActive }) =>
               `${baseStyle} ${
-                isActive ? "text-[#fe5000] font-semibold" : "text-slate-700"
+                isActive ? "text-[#144194] font-semibold" : "text-slate-700"
               }`
             }
           >
@@ -106,7 +105,7 @@ export default function Menubar() {
             onClick={() => setOpen(false)}
             className={({ isActive }) =>
               `${baseStyle} ${
-                isActive ? "text-[#fe5000] font-semibold" : "text-slate-700"
+                isActive ? "text-[#144194] font-semibold" : "text-slate-700"
               }`
             }
           >

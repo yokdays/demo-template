@@ -57,7 +57,7 @@ export default function AgeProgressChart({ data }: Props) {
     <div className="bg-white p-6 rounded-2xl shadow-lg border border-slate-200 w-full">
       <div className="mb-6">
         <h2 className="text-lg font-semibold text-slate-800">
-          ความคืบหน้าตามช่วงอายุ
+          ความคืบหน้าตามกลุ่ม
         </h2>
         <div className="w-12 h-1 bg-[#fe5000] mt-2 rounded-full" />
       </div>
@@ -87,22 +87,28 @@ export default function AgeProgressChart({ data }: Props) {
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
             data={chartData}
-            margin={{ top: 20, right: 20, left: 0, bottom: 10 }}
-            barCategoryGap="10%"
+            layout="vertical"
+            margin={{ top: 20, right: 40, left: 20, bottom: 10 }}
+            barCategoryGap="20%"
           >
             <CartesianGrid
               strokeDasharray="3 3"
-              vertical={false}
+              horizontal={false}
               stroke="#e2e8f0"
             />
 
-            <XAxis dataKey="age" tick={{ fontSize: 12 }} interval={0} />
-
-            <YAxis
+            <XAxis
+              type="number"
               domain={[0, maxValue * 1.15]}
               tick={{ fontSize: 12 }}
               tickFormatter={(v) => v.toLocaleString()}
-              hide
+            />
+
+            <YAxis
+              type="category"
+              dataKey="age"
+              tick={{ fontSize: 12 }}
+              width={80}
             />
 
             <Tooltip
@@ -125,12 +131,12 @@ export default function AgeProgressChart({ data }: Props) {
             <Bar
               dataKey="Quota"
               fill="#0C5CA4"
-              radius={[8, 8, 0, 0]}
-              maxBarSize={42}
+              radius={[0, 8, 8, 0]}
+              maxBarSize={32}
             >
               <LabelList
                 dataKey="Quota"
-                position="top"
+                position="right"
                 fontSize={11}
                 formatter={(v: number) => v.toLocaleString()}
               />
@@ -139,12 +145,12 @@ export default function AgeProgressChart({ data }: Props) {
             <Bar
               dataKey="Success"
               fill="#fe5000"
-              radius={[8, 8, 0, 0]}
-              maxBarSize={42}
+              radius={[0, 8, 8, 0]}
+              maxBarSize={32}
             >
               <LabelList
                 dataKey="Success"
-                position="top"
+                position="right"
                 fontSize={11}
                 formatter={(v: number) => v.toLocaleString()}
               />

@@ -25,7 +25,6 @@ export default function App() {
 
   const [loading, setLoading] = useState(true);
 
-  // ✅ validate token แบบปลอดภัย
   useEffect(() => {
     let mounted = true;
 

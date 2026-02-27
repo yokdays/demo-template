@@ -11,7 +11,7 @@ interface PieData {
   value: number;
 }
 
-const COLORS = ["#FFAD39", "#b43900CC"];
+const COLORS = ["#FFAD39", "#e2e8f0"];
 
 
 export default function InoutDashboard({ inArea, outArea }: Props) {
@@ -26,7 +26,7 @@ export default function InoutDashboard({ inArea, outArea }: Props) {
     <div className="bg-white rounded-xl shadow p-4 grid w-full">
       <div>
         <h2 className="text-lg font-semibold mb-1 text-slate-800">
-          สัดส่วนพื้นที่ในและนอกเขตเทศบาล
+          ภาพรวมการเก็บข้อมูล
         </h2>
       </div>
 
@@ -39,7 +39,7 @@ export default function InoutDashboard({ inArea, outArea }: Props) {
                       dataKey="value"
                       innerRadius="70%"
                       outerRadius="100%"
-                      paddingAngle={4}
+                      paddingAngle={2}
                       cornerRadius={8}
                       startAngle={90}
                       endAngle={-270}

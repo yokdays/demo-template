@@ -3,48 +3,362 @@ import Progress from "./components/Progress";
 import Inout from "./components/Inout_dashboard";
 import Inout2 from "./components/Inout2_dashboard";
 import AgeProgressChart from "./components/AgeProgress";
+import { useState } from "react";
+
+interface SurveyRow {
+  id: number;
+  name: string;
+  quota: number;
+  success: number;
+  percent: number;
+}
+
+interface SurveyDetailItem {
+  description: string;
+  target: string;
+  success: string;
+}
+
+interface SurveyDetail {
+  id: number;
+  details: SurveyDetailItem[];
+}
+
+const surveyDetailData: SurveyDetail[] = [
+  {
+    id: 1,
+    details: [
+      {
+        description: "กลุ่มผู้กำหนด และกำกับนโยบาย",
+        target: "40",
+        success: "10",
+      },
+      {
+        description: "กลุ่มผู้อนุมัติ อนุญาต และประสานงาน",
+        target: "120",
+        success: "20",
+      },
+      {
+        description: "กลุ่มผู้ถือหุ้น",
+        target: "120",
+        success: "30",
+      },
+    ],
+  },
+];
+
+const surveyData: SurveyRow[] = [
+  {
+    id: 1,
+    name: "กลุ่มที่ 1 : กลุ่มภาครัฐและผู้กำกับดูแล​",
+    quota: 1200,
+    success: 980,
+    percent: 82,
+  },
+  {
+    id: 2,
+    name: "กลุ่มที่ 2 : กลุ่มคณะกรรมการ กฟผ.​",
+    quota: 950,
+    success: 870,
+    percent: 92,
+  },
+  {
+    id: 3,
+    name: "กลุ่มที่ 3 : กลุ่มชุมชน​",
+    quota: 800,
+    success: 640,
+    percent: 80,
+  },
+  {
+    id: 4,
+    name: "กลุ่มที่ 4 : กลุ่มพนักงานและสหภาพแรงงาน​",
+    quota: 600,
+    success: 410,
+    percent: 68,
+  },
+  {
+    id: 5,
+    name: "กลุ่มที่ 5 : กลุ่มลูกค้าและผู้ใช้ไฟฟ้า​​",
+    quota: 600,
+    success: 410,
+    percent: 68,
+  },
+  {
+    id: 6,
+    name: "กลุ่มที่ 6 : กลุ่มสื่อมวลชน",
+    quota: 600,
+    success: 410,
+    percent: 68,
+  },
+  {
+    id: 7,
+    name: "กลุ่มที่ 7 : กลุ่มพันธมิตร",
+    quota: 600,
+    success: 410,
+    percent: 68,
+  },
+  {
+    id: 8,
+    name: "กลุ่มที่ 8 : กลุ่มบริษัทในเครือ",
+    quota: 600,
+    success: 410,
+    percent: 68,
+  },
+  {
+    id: 9,
+    name: "กลุ่มที่ 9 : กลุ่มนักวิชาการและประชาสังคม",
+    quota: 600,
+    success: 410,
+    percent: 68,
+  },
+  {
+    id: 10,
+    name: "กลุ่มที่ 10 : กลุ่มคู่แข่ง",
+    quota: 600,
+    success: 410,
+    percent: 68,
+  },
+  {
+    id: 11,
+    name: "กลุ่มที่ 11 : กลุ่มการเงิน",
+    quota: 600,
+    success: 410,
+    percent: 68,
+  },
+];
+
 export default function App() {
+  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const selectedGroup = surveyData.find((item) => item.id === selectedId);
+  const selectedDetail = surveyDetailData.find(
+    (item) => item.id === selectedId,
+  );
+  const handleSelect = (id: number) => {
+    setSelectedId((prev) => (prev === id ? null : id));
+  };
   return (
     <>
       <div className="min-h-screen flex justify-center py-4">
-        <div className="space-y-8 w-[80vw] bg-white p-6 rounded-xl shadow-md">
-          <p className="text-4xl font-semibold text-slate-800 text-[#fe5000]">
-            โครงการเก็บรวบรวมข้อมูลเชิงปริมาณเพื่อประเมินการรับรู้และการยอมรับของสังคมต่อบทบาทสื่อสาธารณะของ
-            ส.ส.ท.
+        <div
+          className="space-y-8 w-[80vw] backdrop-blur-lg
+        bg-white/70 p-6 rounded-xl"
+        >
+          <p className="text-4xl font-semibold text-slate-800">
+            โครงการสำรวจความผูกพันผู้มีส่วนได้ส่วนเสีย กฟผ. ปี 2569
           </p>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <ProgressBar
-              heading="ภาพรวมการเก็บข้อมูล"
-              value={2936}
-              total={5010}
-            />
-            <ProgressBar
-              heading="จำนวนการเก็บข้อมูลเพศชาย"
-              value={1380}
-              total={2936}
-            />
-            <ProgressBar
-              heading="จำนวนการเก็บข้อมูลเพศหญิง"
-              value={1556}
-              total={2936}
-            />
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 min-w-0">
-            <AgeProgressChart
-              data={[
-                { age: "15-24", Quota: 820, Success: 460 },
-                { age: "25-34", Quota: 910, Success: 530 },
-                { age: "35-44", Quota: 870, Success: 510 },
-                { age: "45-54", Quota: 820, Success: 470 },
-                { age: "55-64", Quota: 780, Success: 430 },
-                { age: "65+", Quota: 810, Success: 536 },
-              ]}
-            />
-            <Inout inArea={1861} outArea={1075} />
-            <Inout2 inArea={1531} outArea={1405} />
-          </div>
-          <div className="flex flex-col gap-4">
-            <Progress />
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="w-full p-4 rounded-lg  grid items-center">
+              <ProgressBar
+                heading="ภาพรวมการเก็บข้อมูล"
+                value={2936}
+                total={5010}
+              />
+              <div className="text-sm flex justify-between items-center mt-4">
+                <p className="mx-4 px-6 py-2 bg-[#f5bb01] text-white rounded-t-xl">
+                  ความคืบหน้าผู้มีส่วนได้ส่วนเสีย​
+                </p>
+                <p className="px-6 py-2 mx-4 bg-[#144194] rounded-t-xl text-white">
+                  11 กลุ่ม
+                </p>
+              </div>
+              <div className="w-full overflow-x-auto rounded-2xl border border-gray-200 ">
+                <table className="min-w-[640px] w-full text-sm">
+                  <thead className="bg-gray-50 text-gray-600 uppercase text-xs tracking-wider">
+                    <tr>
+                      {/* <th className="px-6 py-4 text-left">ID</th> */}
+                      <th className="px-6 py-4 text-left">ชื่อ</th>
+                      <th className="px-6 py-4 text-center">โควต้า</th>
+                      <th className="px-6 py-4 text-center">สำเร็จ</th>
+                      <th className="px-6 py-4 text-left">Percent</th>
+                    </tr>
+                  </thead>
+
+                  <tbody className="divide-y divide-gray-100 bg-white">
+                    {surveyData.map((item) => (
+                      <tr
+                        key={item.id}
+                        onClick={() => handleSelect(item.id)}
+                        className={`cursor-pointer transition ${
+                          selectedId === item.id
+                            ? "bg-blue-50"
+                            : "hover:bg-gray-50"
+                        }`}
+                      >
+                        {/* <td className="px-6 py-4 text-gray-500">{item.id}</td> */}
+                        <td className="px-6 py-4 font-medium text-gray-900">
+                          {item.name}
+                        </td>
+
+                        <td className="px-6 py-4 text-center">
+                          {item.quota.toLocaleString()}
+                        </td>
+
+                        <td className="px-6 py-4 text-center font-semibold text-slate-700">
+                          {item.success.toLocaleString()}
+                        </td>
+
+                        <td className="px-6 py-4 w-56">
+                          <div className="space-y-1">
+                            <div className="flex justify-between text-xs font-medium">
+                              <span>{item.percent}%</span>
+                            </div>
+
+                            <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+                              <div
+                                className={`h-full rounded-full transition-all duration-500 ${
+                                  item.percent >= 80
+                                    ? "bg-emerald-500"
+                                    : item.percent >= 60
+                                      ? "bg-yellow-500"
+                                      : "bg-red-500"
+                                }`}
+                                style={{ width: `${item.percent}%` }}
+                              />
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div className="mt-6">
+              {selectedDetail ? (
+                <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+                  <h3 className="text-lg font-semibold mb-4">
+                    รายละเอียดของกลุ่ม {selectedGroup?.name}
+                  </h3>
+
+                  <div className="space-y-4">
+                    {selectedDetail.details.map((detail, index) => (
+                      <div
+                        key={index}
+                        className="rounded-2xl border border-gray-200 bg-white p-5 shadow-sm hover:shadow-md transition"
+                      >
+                        <div className="flex items-center justify-between">
+                          <p className="font-semibold text-slate-800 text-base">
+                            {detail.description}
+                          </p>
+
+                          <span className="text-xs px-3 py-1 rounded-full bg-blue-50 text-blue-600 font-medium">
+                            กลุ่มย่อย
+                          </span>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-6 text-sm mt-4">
+                          <div>
+                            <p className=" text-xs uppercase tracking-wide">
+                              เป้าหมาย (Target)
+                            </p>
+                            <p className="text-lg font-semibold text-slate-800">
+                              {detail.target.toLocaleString()}
+                            </p>
+                          </div>
+
+                          <div>
+                            <p className=" text-xs uppercase tracking-wide">
+                              สำเร็จ (Success)
+                            </p>
+                            <p className="text-lg font-semibold text-emerald-600">
+                              {detail.success.toLocaleString()}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="mt-4">
+                          <div className="flex justify-between text-xs font-medium mb-1">
+                            <span>ความคืบหน้า</span>
+                            <span>
+                              {Math.round(
+                                (detail.success / detail.target) * 100,
+                              )}
+                              %
+                            </span>
+                          </div>
+
+                          <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+                            <div
+                              className="h-full bg-[#144194] rounded-full transition-all duration-500"
+                              style={{
+                                width: `${Math.round(
+                                  (detail.success / detail.target) * 100,
+                                )}%`,
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div className="">
+                  <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+                    {/* Header */}
+                    <div className="px-6 py-4 bg-gray-50 border-b border-gray-200">
+                      <h3 className="text-sm font-semibold text-gray-700">
+                        รอบการเก็บข้อมูล
+                      </h3>
+                    </div>
+
+                    {/* Table */}
+                    <div className="overflow-x-auto">
+                      <table className="w-full text-sm">
+                        <thead className="bg-gray-100 text-gray-600 uppercase text-xs tracking-wider">
+                          <tr>
+                            <th className="px-6 py-3 text-left">รอบที่</th>
+                            <th className="px-6 py-3 text-left">ช่วงเวลา</th>
+                            <th className="px-6 py-3 text-center">เป้าหมาย</th>
+                            <th className="px-6 py-3 text-center">สำเร็จ</th>
+                            <th className="px-6 py-3 text-left">สถานะ</th>
+                          </tr>
+                        </thead>
+
+                        <tbody className="divide-y divide-gray-100">
+                          <tr className="hover:bg-gray-50 transition">
+                            <td className="px-6 py-4 font-medium text-slate-800">
+                              รอบที่ 1
+                            </td>
+                            <td className="px-6 py-4 text-gray-600">
+                              1 ม.ค. 2026 - 31 ม.ค. 2026
+                            </td>
+                            <td className="px-6 py-4 text-center">2,000</td>
+                            <td className="px-6 py-4 text-center font-semibold text-emerald-600">
+                              1,750
+                            </td>
+                            <td className="px-6 py-4">
+                              <span className="px-3 py-1 text-xs rounded-full bg-emerald-100 text-emerald-600 font-medium">
+                                สำเร็จแล้ว
+                              </span>
+                            </td>
+                          </tr>
+
+                          <tr className="hover:bg-gray-50 transition">
+                            <td className="px-6 py-4 font-medium text-slate-800">
+                              รอบที่ 2
+                            </td>
+                            <td className="px-6 py-4 text-gray-600">
+                              1 ก.พ. 2026 - 28 ก.พ. 2026
+                            </td>
+                            <td className="px-6 py-4 text-center">3,000</td>
+                            <td className="px-6 py-4 text-center font-semibold text-blue-600">
+                              1,186
+                            </td>
+                            <td className="px-6 py-4">
+                              <span className="px-3 py-1 text-xs rounded-full bg-blue-100 text-blue-600 font-medium">
+                                กำลังดำเนินการ
+                              </span>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

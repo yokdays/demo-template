@@ -1,9 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import thaipbscustom from "../images/thaipbs_custom.png";
 import ModernInput from "./input";
-
+import egatcustom from "../images/egat_custom.png"
 interface LoginProps {
   setToken: (token: string) => void;
 }
@@ -51,13 +50,13 @@ export default function Login({ setToken }: LoginProps) {
         >
           <div className="flex items-center justify-center gap-4 flex-wrap">
             <img
-              src={thaipbscustom}
+              src={egatcustom}
               alt="thaipbs"
               className="w-[400px] object-contain"
             />
           </div>
           <h1 className="text-xl font-bold text-center p-4 min-w-xl max-w-3xl">
-            โครงการเก็บรวบรวมข้อมูลเชิงปริมาณเพื่อประเมินการรับรู้และการยอมรับของสังคมต่อบทบาทสื่อสาธารณะของ ส.ส.ท.
+            โครงการสำรวจความผูกพันผู้มีส่วนได้ส่วนเสีย กฟผ. ปี 2569
           </h1>
 
           <h1 className="text-md font-bold text-center">เข้าสู่ระบบ</h1>
