@@ -63,7 +63,6 @@ export default function App() {
     };
   }, [token]);
 
-  // ⏳ loading state
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">

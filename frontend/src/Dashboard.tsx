@@ -207,8 +207,8 @@ export default function App() {
             โครงการสำรวจความผูกพันผู้มีส่วนได้ส่วนเสีย กฟผ. ปี 2569
           </p>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div className="w-full rounded-xl  grid items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 ">
+            <div className="w-full rounded-xl  grid items-center self-start">
               <ProgressBar
                 heading="ภาพรวมการเก็บข้อมูล"
                 value={2936}
@@ -379,7 +379,7 @@ export default function App() {
                               %
                             </span>
                           </div>
-
+                              
                           <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
                             <div
                               className="h-full bg-[#144194] rounded-full transition-all duration-500"

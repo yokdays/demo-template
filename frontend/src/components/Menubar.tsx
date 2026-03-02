@@ -26,7 +26,6 @@ export default function Menubar() {
     >
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-
           <div className="hidden md:flex items-center gap-6">
             <NavLink
               to="/dashboard"
@@ -40,19 +39,23 @@ export default function Menubar() {
             </NavLink>
 
             <NavLink
-              to="/branch"
+              to="/"
               className={({ isActive }) =>
-                `${baseStyle} ${isActive ? activeStyle : inactiveStyle}`
+                `${baseStyle} ${
+                  isActive ? activeStyle : inactiveStyle
+                } pointer-events-none opacity-50 cursor-not-allowed`
               }
             >
               <Users size={18} />
               ข้อมูลเชิงลึก
             </NavLink>
 
-            <NavLink
-              to="/analysis"
+             <NavLink
+              to="/"
               className={({ isActive }) =>
-                `${baseStyle} ${isActive ? activeStyle : inactiveStyle}`
+                `${baseStyle} ${
+                  isActive ? activeStyle : inactiveStyle
+                } pointer-events-none opacity-50 cursor-not-allowed`
               }
             >
               <Users size={18} />
@@ -117,4 +120,3 @@ export default function Menubar() {
     </nav>
   );
 }
-

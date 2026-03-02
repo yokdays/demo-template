@@ -26,7 +26,7 @@ const users = [
   {
     id: 1,
     username: "demo",
-    name: "Admin",
+    name: "Demo",
     password: bcrypt.hashSync("demo", 10),
   },
 ];
