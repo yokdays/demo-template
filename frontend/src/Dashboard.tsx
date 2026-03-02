@@ -45,6 +45,66 @@ const surveyDetailData: SurveyDetail[] = [
       },
     ],
   },
+  {
+    id: 2,
+    details: [
+      {
+        description: "กลุ่มคณะกรรมการ กฟผ.​",
+        target: "40",
+        success: "10",
+      },
+    ],
+  },
+  {
+    id: 3,
+    details: [
+      {
+        description: "โรงไฟฟ้าพระนครเหนือ",
+        target: "40",
+        success: "10",
+      },
+      {
+        description: "โรงไฟฟ้าพระนครใต้",
+        target: "40",
+        success: "10",
+      },
+      {
+        description: "ชุมชนใกล้แนวสายส่ง",
+        target: "40",
+        success: "10",
+      },
+      {
+        description: "โรงไฟฟ้าวังน้อย",
+        target: "40",
+        success: "10",
+      },
+      {
+        description: "โรงไฟฟ้าบางปะกง",
+        target: "40",
+        success: "10",
+      },
+    ],
+  },
+  {
+    id: 4,
+    details: [
+      {
+        description: "Gen Z (16-28 ปี)",
+        target: "10",
+        success: "10",
+      },
+      {
+        description: "Gen Y (29-44 ปี)",
+        target: "70",
+        success: "20",
+      },
+      {
+        description: "Gen X (45-60 ปี)",
+        target: "60",
+        success: "50",
+      },
+    ],
+  },
 ];
 
 const surveyData: SurveyRow[] = [
@@ -128,7 +188,7 @@ const surveyData: SurveyRow[] = [
 ];
 
 export default function App() {
-  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [selectedId, setSelectedId] = useState<number | null>(1);
   const selectedGroup = surveyData.find((item) => item.id === selectedId);
   const selectedDetail = surveyDetailData.find(
     (item) => item.id === selectedId,
@@ -148,7 +208,7 @@ export default function App() {
           </p>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            <div className="w-full p-4 rounded-lg  grid items-center">
+            <div className="w-full rounded-xl  grid items-center">
               <ProgressBar
                 heading="ภาพรวมการเก็บข้อมูล"
                 value={2936}
@@ -164,7 +224,7 @@ export default function App() {
               </div>
               <div className="w-full overflow-x-auto rounded-2xl border border-gray-200 ">
                 <table className="min-w-[640px] w-full text-sm">
-                  <thead className="bg-gray-50 text-gray-600 uppercase text-xs tracking-wider">
+                  <thead className="bg-gray-100 text-gray-600 uppercase text-xs tracking-wider">
                     <tr>
                       {/* <th className="px-6 py-4 text-left">ID</th> */}
                       <th className="px-6 py-4 text-left">ชื่อ</th>
@@ -181,7 +241,7 @@ export default function App() {
                         onClick={() => handleSelect(item.id)}
                         className={`cursor-pointer transition ${
                           selectedId === item.id
-                            ? "bg-blue-50"
+                            ? "bg-[#f5bb01]/40"
                             : "hover:bg-gray-50"
                         }`}
                       >
@@ -224,11 +284,67 @@ export default function App() {
                 </table>
               </div>
             </div>
-            <div className="mt-6">
+            <div className="">
+              <div className="bg-white border border-gray-200 rounded-xl px-6 pb-8 mb-4 shadow-sm">
+                <h3 className="text-lg font-semibold my-4">รอบการเก็บข้อมูล</h3>
+                <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead className="bg-gray-100 text-gray-600 uppercase text-xs tracking-wider">
+                        <tr>
+                          <th className="px-6 py-3 text-left">รอบที่</th>
+                          <th className="px-6 py-3 text-left">ช่วงเวลา</th>
+                          <th className="px-6 py-3 text-center">เป้าหมาย</th>
+                          <th className="px-6 py-3 text-center">สำเร็จ</th>
+                          <th className="px-6 py-3 text-left">สถานะ</th>
+                        </tr>
+                      </thead>
+
+                      <tbody className="divide-y divide-gray-100">
+                        <tr className="hover:bg-gray-50 transition">
+                          <td className="px-6 py-4 font-medium text-slate-800">
+                            รอบที่ 1
+                          </td>
+                          <td className="px-6 py-4 text-gray-600">
+                            1 ม.ค. 2026 - 31 ม.ค. 2026
+                          </td>
+                          <td className="px-6 py-4 text-center">2,000</td>
+                          <td className="px-6 py-4 text-center font-semibold text-emerald-600">
+                            1,750
+                          </td>
+                          <td className="px-6 py-4">
+                            <span className="px-3 py-1 text-xs rounded-full bg-emerald-100 text-emerald-600 font-medium">
+                              สำเร็จแล้ว
+                            </span>
+                          </td>
+                        </tr>
+
+                        <tr className="hover:bg-gray-50 transition">
+                          <td className="px-6 py-4 font-medium text-slate-800">
+                            รอบที่ 2
+                          </td>
+                          <td className="px-6 py-4 text-gray-600">
+                            1 ก.พ. 2026 - 28 ก.พ. 2026
+                          </td>
+                          <td className="px-6 py-4 text-center">3,000</td>
+                          <td className="px-6 py-4 text-center font-semibold text-blue-600">
+                            1,186
+                          </td>
+                          <td className="px-6 py-4">
+                            <span className="px-3 py-1 text-xs rounded-full bg-blue-100 text-blue-600 font-medium">
+                              กำลังดำเนินการ
+                            </span>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
               {selectedDetail ? (
-                <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
-                  <h3 className="text-lg font-semibold mb-4">
-                    รายละเอียดของกลุ่ม {selectedGroup?.name}
+                <div className="bg-white border border-gray-200 rounded-xl px-6 pb-8 shadow-sm">
+                  <h3 className="text-lg font-semibold mt-8 mb-4">
+                    รายละเอียดของ {selectedGroup?.name}
                   </h3>
 
                   <div className="space-y-4">
@@ -239,37 +355,23 @@ export default function App() {
                       >
                         <div className="flex items-center justify-between">
                           <p className="font-semibold text-slate-800 text-base">
-                            {detail.description}
+                            {index + 1}. {detail.description}
                           </p>
-
                           <span className="text-xs px-3 py-1 rounded-full bg-blue-50 text-blue-600 font-medium">
                             กลุ่มย่อย
                           </span>
                         </div>
-
-                        <div className="grid grid-cols-2 gap-6 text-sm mt-4">
-                          <div>
-                            <p className=" text-xs uppercase tracking-wide">
-                              เป้าหมาย (Target)
-                            </p>
-                            <p className="text-lg font-semibold text-slate-800">
-                              {detail.target.toLocaleString()}
-                            </p>
-                          </div>
-
-                          <div>
-                            <p className=" text-xs uppercase tracking-wide">
-                              สำเร็จ (Success)
-                            </p>
-                            <p className="text-lg font-semibold text-emerald-600">
-                              {detail.success.toLocaleString()}
-                            </p>
-                          </div>
-                        </div>
-
                         <div className="mt-4">
                           <div className="flex justify-between text-xs font-medium mb-1">
-                            <span>ความคืบหน้า</span>
+                            <div className="text-lg">
+                              <span className="text-xl text-[#144194]">
+                                {detail.success.toLocaleString()}
+                              </span>{" "}
+                              <span className="text-xs text-[#5189BC]">
+                                {" "}
+                                / {detail.target.toLocaleString()}
+                              </span>
+                            </div>
                             <span>
                               {Math.round(
                                 (detail.success / detail.target) * 100,
@@ -294,69 +396,7 @@ export default function App() {
                   </div>
                 </div>
               ) : (
-                <div className="">
-                  <div className="bg-white border border-gray-200 rounded-2xl shadow-sm overflow-hidden">
-                    {/* Header */}
-                    <div className="px-6 py-4 bg-gray-50 border-b border-gray-200">
-                      <h3 className="text-sm font-semibold text-gray-700">
-                        รอบการเก็บข้อมูล
-                      </h3>
-                    </div>
-
-                    {/* Table */}
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-sm">
-                        <thead className="bg-gray-100 text-gray-600 uppercase text-xs tracking-wider">
-                          <tr>
-                            <th className="px-6 py-3 text-left">รอบที่</th>
-                            <th className="px-6 py-3 text-left">ช่วงเวลา</th>
-                            <th className="px-6 py-3 text-center">เป้าหมาย</th>
-                            <th className="px-6 py-3 text-center">สำเร็จ</th>
-                            <th className="px-6 py-3 text-left">สถานะ</th>
-                          </tr>
-                        </thead>
-
-                        <tbody className="divide-y divide-gray-100">
-                          <tr className="hover:bg-gray-50 transition">
-                            <td className="px-6 py-4 font-medium text-slate-800">
-                              รอบที่ 1
-                            </td>
-                            <td className="px-6 py-4 text-gray-600">
-                              1 ม.ค. 2026 - 31 ม.ค. 2026
-                            </td>
-                            <td className="px-6 py-4 text-center">2,000</td>
-                            <td className="px-6 py-4 text-center font-semibold text-emerald-600">
-                              1,750
-                            </td>
-                            <td className="px-6 py-4">
-                              <span className="px-3 py-1 text-xs rounded-full bg-emerald-100 text-emerald-600 font-medium">
-                                สำเร็จแล้ว
-                              </span>
-                            </td>
-                          </tr>
-
-                          <tr className="hover:bg-gray-50 transition">
-                            <td className="px-6 py-4 font-medium text-slate-800">
-                              รอบที่ 2
-                            </td>
-                            <td className="px-6 py-4 text-gray-600">
-                              1 ก.พ. 2026 - 28 ก.พ. 2026
-                            </td>
-                            <td className="px-6 py-4 text-center">3,000</td>
-                            <td className="px-6 py-4 text-center font-semibold text-blue-600">
-                              1,186
-                            </td>
-                            <td className="px-6 py-4">
-                              <span className="px-3 py-1 text-xs rounded-full bg-blue-100 text-blue-600 font-medium">
-                                กำลังดำเนินการ
-                              </span>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
+                ""
               )}
             </div>
           </div>

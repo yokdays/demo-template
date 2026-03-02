@@ -8,7 +8,7 @@ export default function ProgressBar({ heading, value, total }: Props) {
   const percent = total > 0 ? Math.min((value / total) * 100, 100) : 0;
 
   return (
-    <div className="w-full bg-white p-4 rounded-lg shadow-md ">
+    <div className="w-full bg-white p-4 rounded-xl border border-gray-200 shadow-md ">
       <div className="flex items-end justify-between mb-2">
         <div className="flex items-center gap-2">
           <span className="text-xl font-medium text-slate-700">

@@ -13,12 +13,14 @@ const app = express();
 
 app.use(express.json());
 
-app.use(
-  cors({
-    origin: ["https://demo-ptt.custom-asia.com", "http://localhost:5173"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  }),
-);
+
+app.use(cors())
+// app.use(
+//   cors({
+//     origin: ["https://demo-ptt.custom-asia.com", "http://localhost:5173"],
+//     allowedHeaders: ["Content-Type", "Authorization"],
+//   }),
+// );
 
 const users = [
   {
